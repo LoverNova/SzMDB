@@ -1,6 +1,7 @@
 <?php
     $path = parse_url($_SERVER["REQUEST_URI"])["path"];
 
+    echo (":3")
 
     switch($path){
         case "" :
