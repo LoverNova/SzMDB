@@ -1,15 +1,14 @@
 <?php
     $path = parse_url($_SERVER["REQUEST_URI"])["path"];
 
-    echo (":3");
-
+    // Change default path to the final location
+    $defaultPath = '/SzMDB/';
     switch($path){
-        case "" :
-            
+        case $defaultPath:
             require_once("./view/cimlap.php");
             break;
         default:
-            echo("404 - page not found <a href = ''>Ugrás a címlapra</a>");
+            require_once("./view/404.php");
             break;
     }
 ?>

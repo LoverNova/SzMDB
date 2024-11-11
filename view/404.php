@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Cimlap</h1>
-    <p>Ez a SzMDB Címlapja</p>
-    <p>Itt lesznek találhatók top filmekket, a keresőt és a felhasználó fület</p>
+    <h1>404</h1>
+    <p>Page not found<p>
+    <p><a href = <?php echo($defaultPath) ?>>Ugrás a címlapra</a></p>
 </body>
 </html>
