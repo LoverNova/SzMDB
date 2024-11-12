@@ -1,6 +1,5 @@
 <?php
     $path = parse_url($_SERVER["REQUEST_URI"])["path"];
-
     // Change default path to the final location
     $defaultPath = '/SzMDB/';
     switch($path){
