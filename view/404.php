@@ -10,6 +10,12 @@
     </style>
 </head>
 <body>
+    <ul class="navbar">
+        <li class="navbar"><a href="<?php echo($defaultPath) ?>">Főoldal</a></li>
+        <li class="navbar"><a href="#news">News</a></li>
+        <li class="navbar"><a href="#contact">Contact</a></li>
+        <li class="navbar right"> <a href="#about">About</a></li>
+    </ul> 
     <h1>404</h1>
     <p>Page not found<p>
     <p><a href = <?php echo($defaultPath) ?>>Ugrás a címlapra</a></p>

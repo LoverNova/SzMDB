@@ -11,7 +11,7 @@
 </head>
 <body>
     <ul class="navbar">
-        <li class="navbar"><a href="#home">Home</a></li>
+        <li class="navbar"><a href="<?php echo($defaultPath) ?>">Home</a></li>
         <li class="navbar"><a href="#news">News</a></li>
         <li class="navbar"><a href="#contact">Contact</a></li>
         <li class="navbar right"> <a href="#about">About</a></li>
