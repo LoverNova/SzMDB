@@ -4,6 +4,8 @@
     $defaultPath = '/SzMDB/';
     switch($path){
         case $defaultPath:
+            $table = json_decode(".view/movies.json", true);
+            var_dump($table);
             require_once("./view/cimlap.php");
             break;
         default:

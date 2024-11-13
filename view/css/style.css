@@ -1,5 +1,5 @@
 body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; color: #fff8f0;
 }
 ul.navbar {
     list-style-type: none;
@@ -28,4 +28,19 @@ li.navbar a {
   /* Change the link color to #111 (black) on hover */
 li.navbar a:hover {
     background-color: #111;
+}
+
+p{
+color: #333;
+
+
+}
+table{
+color: #333;
+
+
+}
+#besorolas{
+color: #111;
+
 }

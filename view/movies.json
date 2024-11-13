@@ -1,0 +1,13 @@
+[
+    {
+        "title": "Movie 1",
+        "release_date": "2023-01-01",
+        "genre": "Action"
+    },
+    {
+        "title": "Movie 2",
+        "release_date": "2023-02-01",
+        "genre": "Drama"
+    }
+
+]
