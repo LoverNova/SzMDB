@@ -5,11 +5,11 @@
     $defaultPath = '/SzMDB/';
     switch($path){
         case $defaultPath:
-            require_once("./view/cimlap.php");
+            require_once("./view/cimlap.html");
             echo($data[0]["nev"]);
             break;
         default:
-            require_once("./view/404.php");
+            require_once("./view/404.html");
             break;
     }
 ?>
