@@ -6,6 +6,9 @@
         case $defaultPath:
             require_once("./view/cimlap.html");
             break;
+        case $defaultPath . "moviePage":
+            require_once("./view/moviePage.html");
+            break;
         default:
             require_once("./view/404.html");
             break;
