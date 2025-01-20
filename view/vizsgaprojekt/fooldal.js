@@ -1,106 +1,106 @@
-// Header létrehozása, ha nem létezik
 let header = document.querySelector("header");
-if (!header) {
-  header = document.createElement("header");
-  header.style.display = "flex";
-  header.style.alignItems = "center";
-  header.style.justifyContent = "space-between";
-  header.style.padding = "10px";
-  header.style.backgroundColor = "#f4f4f4";
-  document.body.prepend(header);
-}
+  if (!header) {
+    header = document.createElement("header");
+    document.body.prepend(header);
+  }
 
-// Név (link) hozzáadása
-const name = document.createElement("a");
-name.textContent = "Név";
-name.style.flexGrow = "1";
-name.style.textAlign = "center";
-name.style.cursor = "pointer"; // Mutatja, hogy kattintható
-name.href = "#"; // Adj meg egy valódi URL-t, ha szükséges
-header.appendChild(name);
+  // Név (link) hozzáadása a jobb felső sarokhoz, és link a profil1.html oldalra
+  const name = document.createElement("a");
+  name.textContent = "Név";
+  name.style.textAlign = "center";
+  name.style.cursor = "pointer"; // Mutatja, hogy kattintható
+  name.href = "profil1.html"; // Profil oldal link
+  name.style.padding = "10px";
+  header.appendChild(name);
 
-// Profil menüpontok hozzáadása
-const profile = document.createElement("div");
-profile.textContent = "Profil és profil menüpontok";
-profile.style.fontSize = "0.9em";
-header.appendChild(profile);
+  // Profil menüpontok hozzáadása (jobb oldal)
+  const profile = document.createElement("div");
+  profile.textContent = "Profil és menüpontok";
+  profile.style.fontSize = "0.9em";
 
-// Container létrehozása
-const container = document.createElement("div");
-container.style.display = "flex";
-container.style.padding = "20px";
-document.body.appendChild(container);
+  // Bal oldali szűrők sáv
+  const filters = document.createElement("div");
+  filters.classList.add("filters");
 
-// Filters (Oldalsáv)
-const filters = document.createElement("aside");
-filters.style.width = "200px";
-filters.style.marginRight = "20px";
+  const filterTitle = document.createElement("h3");
+  filterTitle.textContent = "Szűrők";
+  filters.appendChild(filterTitle);
 
-// Szűrő cím
-const filterTitle = document.createElement("h3");
-filterTitle.textContent = "Szűrők";
-filterTitle.style.marginBottom = "10px";
-filters.appendChild(filterTitle);
+  const filterList = document.createElement("ul");
+  ["Színészek", "Rendezők", "Stb..."].forEach((filter) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = filter;
+    filterList.appendChild(listItem);
+  });
+  filters.appendChild(filterList);
 
-// Szűrő lista
-const filterList = document.createElement("ul");
-filterList.style.listStyle = "none";
-["Színészek", "Rendezők", "Stb..."].forEach((filter) => {
-  const listItem = document.createElement("li");
-  listItem.textContent = filter;
-  listItem.style.marginBottom = "5px";
-  filterList.appendChild(listItem);
-});
-filters.appendChild(filterList);
-container.appendChild(filters);
+  // Profil sáv (jobb oldal)
+  const profileSection = document.createElement("div");
+  profileSection.classList.add("profile");
+  profileSection.appendChild(profile);
 
-// Content (Fő tartalom)
-const content = document.createElement("main");
-content.style.flexGrow = "1";
+  // Kereső sáv
+  const searchBar = document.createElement("div");
+  searchBar.classList.add("search-container");
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Cím kereső";
+  searchBar.appendChild(searchInput);
 
-// Kereső
-const searchBar = document.createElement("div");
-searchBar.style.marginBottom = "20px";
-const searchInput = document.createElement("input");
-searchInput.type = "text";
-searchInput.placeholder = "Cím kereső";
-searchInput.style.width = "100%";
-searchInput.style.padding = "10px";
-searchInput.style.fontSize = "1em";
-searchInput.style.border = "1px solid #ccc";
-searchInput.style.borderRadius = "5px";
-searchBar.appendChild(searchInput);
-content.appendChild(searchBar);
+  const searchButton = document.createElement("button");
+  searchButton.textContent = "Keresés";
+  searchBar.appendChild(searchButton);
 
-// Filmek listája
-const movieList = document.createElement("div");
-movieList.style.display = "flex";
-movieList.style.gap = "20px";
-movieList.style.flexWrap = "wrap";
+  // Container létrehozása (filmek tartalmazásához)
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.flexDirection = "column";
+  container.style.alignItems = "center";
+  document.body.appendChild(container);
 
-// Filmek hozzáadása
-const movies = ["Film 1", "Film 2", "Film 3", "Film 4"];
-movies.forEach((movieTitle) => {
-  const movie = document.createElement("div");
-  movie.style.width = "200px";
-  movie.style.textAlign = "center";
+  container.appendChild(searchBar);
 
-  const poster = document.createElement("div");
-  poster.textContent = "Poszter";
-  poster.style.width = "100%";
-  poster.style.height = "300px";
-  poster.style.backgroundColor = "#ddd";
-  poster.style.marginBottom = "10px";
-  movie.appendChild(poster);
+  // Filmek listája
+  const movieList = document.createElement("div");
+  movieList.classList.add("movie-list");
 
-  const title = document.createElement("div");
-  title.textContent = movieTitle;
-  title.style.fontSize = "1em";
-  title.style.fontWeight = "bold";
-  movie.appendChild(title);
+  // Filmek hozzáadása
+  const movies = ["Film 1", "Film 2", "Film 3", "Film 4", "Film 5", "Film 6", "Film 7", "Film 8"];
+  const movieElements = movies.map((movieTitle) => {
+    const movie = document.createElement("div");
+    movie.classList.add("movie");
 
-  movieList.appendChild(movie);
-});
+    const poster = document.createElement("div");
+    poster.classList.add("poster");
+    poster.textContent = "Poszter"; // Helyettesíthető valódi képpel
+    movie.appendChild(poster);
 
-content.appendChild(movieList);
-container.appendChild(content);
+    const title = document.createElement("div");
+    title.textContent = movieTitle;
+    title.classList.add("movie-title");
+    movie.appendChild(title);
+
+    movieList.appendChild(movie);
+    return { element: movie, title: movieTitle.toLowerCase() };
+  });
+
+  container.appendChild(movieList);
+
+  // Keresési funkció gombra kattintva
+  searchButton.addEventListener("click", () => {
+    const keresendo = searchInput.value.toLowerCase().trim();
+    let found = false;
+
+    movieElements.forEach(({ element, title }) => {
+      if (title.includes(keresendo)) {
+        element.classList.remove("hidden");
+        found = true;
+      } else {
+        element.classList.add("hidden");
+      }
+    });
+
+    if (!found && keresendo) {
+      alert("Nincs találat a keresésre.");
+    }
+  });
