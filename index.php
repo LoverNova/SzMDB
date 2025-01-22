@@ -9,6 +9,9 @@
         case $defaultPath . "moviePage":
             require_once("./view/moviePage.html");
             break;
+        case $defaultPath . "profile":
+            require_once("./view/profil.html");
+            break;
         default:
             require_once("./view/404.html");
             break;
