@@ -22,5 +22,5 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
 // "Regisztráció" gombra kattintva átirányítás
 document.getElementById("register-link").addEventListener("click", () => {
-  window.location.href = "register.html"; // Regisztrációs oldal betöltése
+  window.location.href = "register"; // Regisztrációs oldal betöltése
 });

@@ -15,7 +15,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   
     if (response.ok) {
       alert("Sikeres regisztráció! Most jelentkezz be.");
-      window.location.href = "login.html"; // Visszairányítás a bejelentkezési oldalra
+      window.location.href = "login"; // Visszairányítás a bejelentkezési oldalra
     } else {
       document.getElementById("error-message").textContent = result.message;
     }
@@ -23,6 +23,6 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   
   // "Bejelentkezés" link kattintása
   document.getElementById("login-link").addEventListener("click", () => {
-    window.location.href = "login.html";
+    window.location.href = "login";
   });
   

@@ -48,15 +48,16 @@ body {
   }
   
   .footer {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+    margin-top: 10px;
+    text-align: center;
   }
   
   .footer .link {
     font-size: 0.9em;
     color: #007bff;
     cursor: pointer;
+    display: inline-block;
+    margin-top: 15px; /* Ezzel helyezzük lejjebb a linket */
   }
   
   .footer .link:hover {

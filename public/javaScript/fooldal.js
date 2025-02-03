@@ -9,7 +9,7 @@ const userNameLink = document.createElement("a");
 userNameLink.textContent = "Név";
 userNameLink.style.textAlign = "center";
 userNameLink.style.cursor = "pointer"; // Mutatja, hogy kattintható
-userNameLink.href = "profil1.html"; // Profil oldal link
+userNameLink.href = "profile"; // Profil oldal link
 userNameLink.style.padding = "10px";
 userNameLink.style.textDecoration = "line-through"; // Áthúzza a szöveget
 header.appendChild(userNameLink);
