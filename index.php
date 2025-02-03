@@ -12,6 +12,12 @@
         case $defaultPath . "profile":
             require_once("./view/profil.html");
             break;
+        case $defaultPath . "login":
+            require_once("./view/login.html");
+            break;
+        case $defaultPath . "register":
+            require_once("./view/register.html");
+            break;
         default:
             require_once("./view/404.html");
             break;
