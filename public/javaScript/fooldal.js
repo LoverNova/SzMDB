@@ -82,7 +82,10 @@ const movieElements = movies.map((movieTitle) => {
   movie.appendChild(title);
 
   movieList.appendChild(movie);
-  return { element: movie, title: movieTitle.toLowerCase() };
+  return { 
+    element: movie, 
+    title: movieTitle.toLowerCase().replace(/\s+/g, "") // Megváltozott: szóközök eltávolítása a filmcímekből
+  };
 });
 
 container.appendChild(movieList);
@@ -96,21 +99,45 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Keresési funkció gombra kattintva
+//"Levenshtein distance" jobb kereséshez/elirások ellenére is legyen esélye megtalálni a filmet
+function levenshteinDistance(a, b) {
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  
+  const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+  for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+// Javitott kereső rendszer => keresés a gombra kattintva
 searchButton.addEventListener("click", () => {
-  const keresendo = searchInput.value.toLowerCase().trim();
+  const keresendo = searchInput.value.toLowerCase().trim().replace(/\s+/g, "");
   let found = false;
 
   movieElements.forEach(({ element, title }) => {
-    if (title.includes(keresendo)) {
+    const distance = levenshteinDistance(title, keresendo);
+    console.log(`Comparing: ${title} with ${keresendo}, Distance: ${distance}`);
+    
+    if (title.includes(keresendo) || distance <= 2) { //Felhasználói hibahatár (distance <= 2 )
       element.classList.remove("hidden");
       found = true;
     } else {
       element.classList.add("hidden");
     }
   });
-
-  // Ha nincs találat, felugró ablak megjelenítése
+//Felugró ablak ha nincs találat
   if (!found && keresendo) {
     alert(`A "${keresendo}" nem található az oldalon`);
   }
