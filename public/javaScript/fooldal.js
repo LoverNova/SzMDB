@@ -1,4 +1,4 @@
-let header = document.querySelector("header");
+let header = document.querySelector("header"); 
 if (!header) {
   header = document.createElement("header");
   document.body.prepend(header);
@@ -22,6 +22,18 @@ profile.style.fontSize = "0.9em";
 // Bal oldali szűrők sáv
 const filters = document.createElement("div");
 filters.classList.add("filters");
+filters.style.position = "fixed";
+filters.style.left = "-250px"; // Alapértelmezetten rejtve
+filters.style.top = "0";
+filters.style.width = "250px";
+filters.style.height = "100%";
+filters.style.background = "#f8f9fa";
+filters.style.transition = "left 0.3s ease-in-out";
+filters.style.padding = "10px";
+filters.style.boxShadow = "2px 0 5px rgba(0,0,0,0.2)";
+filters.style.overflowY = "auto";
+
+document.body.appendChild(filters);
 
 const filterTitle = document.createElement("h3");
 filterTitle.textContent = "Szűrők";
@@ -34,6 +46,15 @@ const filterList = document.createElement("ul");
   filterList.appendChild(listItem);
 });
 filters.appendChild(filterList);
+
+// Egérmozgás figyelése
+document.addEventListener("mousemove", (event) => {
+  if (event.clientX < 50) {
+    filters.style.left = "0px"; // Szűrősáv előugrik
+  } else if (event.clientX > 300) { // Ha elhagyja a sávot
+    filters.style.left = "-250px"; // Visszacsúszik
+  }
+});
 
 // Profil sáv (jobb oldal)
 const profileSection = document.createElement("div");
@@ -84,60 +105,26 @@ const movieElements = movies.map((movieTitle) => {
   movieList.appendChild(movie);
   return { 
     element: movie, 
-    title: movieTitle.toLowerCase().replace(/\s+/g, "") // Megváltozott: szóközök eltávolítása a filmcímekből
+    title: movieTitle.toLowerCase() // Kis- és nagybetű érzéketlenség
   };
 });
 
 container.appendChild(movieList);
 
-// CSS osztály a rejtéshez
-const style = document.createElement("style");
-style.textContent = `
-  .hidden {
-    display: none !important;
-  }
-`;
-document.head.appendChild(style);
-
-//"Levenshtein distance" jobb kereséshez/elirások ellenére is legyen esélye megtalálni a filmet
-function levenshteinDistance(a, b) {
-  if (!a.length) return b.length;
-  if (!b.length) return a.length;
-  
-  const matrix = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-  for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= a.length; i++) {
-    for (let j = 1; j <= b.length; j++) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1,
-        matrix[i][j - 1] + 1,
-        matrix[i - 1][j - 1] + cost
-      );
-    }
-  }
-  return matrix[a.length][b.length];
-}
-
-// Javitott kereső rendszer => keresés a gombra kattintva
+// Keresés gombra kattintva
 searchButton.addEventListener("click", () => {
-  const keresendo = searchInput.value.toLowerCase().trim().replace(/\s+/g, "");
+  const keresendo = searchInput.value.toLowerCase().trim();
   let found = false;
 
   movieElements.forEach(({ element, title }) => {
-    const distance = levenshteinDistance(title, keresendo);
-    console.log(`Comparing: ${title} with ${keresendo}, Distance: ${distance}`);
-    
-    if (title.includes(keresendo) || distance <= 2) { //Felhasználói hibahatár (distance <= 2 )
-      element.classList.remove("hidden");
+    if (title.includes(keresendo)) {
+      element.style.display = "block"; // Csak a keresett film marad látható
       found = true;
     } else {
-      element.classList.add("hidden");
+      element.style.display = "none"; // Többi eltűnik
     }
   });
-//Felugró ablak ha nincs találat
+
   if (!found && keresendo) {
     alert(`A "${keresendo}" nem található az oldalon`);
   }
