@@ -1,0 +1,82 @@
+[
+    {
+        "id":"1",
+        "title":"A Karib-tenger kalózai: A Fekete Gyöngy átka",
+        "pictureURL":"http:\/\/img9.indafoto.hu\/5\/7\/24927_de9cf7fc237bf2217c1c576e4f026fee\/2130077_ba99306ae8579669cacc85f325cb6692_xl.jpg",
+        "description":"A Karib-tenger kalózai: A Fekete Gyöngy átka egy 2003-as kalandvígjáték, ami a Karib-tengeren játszódik az 1700-as években.",
+        "isItASeries":"1",
+        "sereiesId":"1",
+        "seriesTitle":"A Karib-tenger kalózai",
+        "part":"1"
+    },
+    {
+        "id":"2",
+        "title":"A Karib-tenger kalózai Holtak kincse",
+        "pictureURL":"http:\/\/img9.indafoto.hu\/5\/7\/24927_de9cf7fc237bf2217c1c576e4f026fee\/2130077_ba99306ae8579669cacc85f325cb6692_xl.jpg",
+        "description":"[placeholder]",
+        "isItASeries":"1",
+        "sereiesId":"1",
+        "seriesTitle":"A Karib-tenger kalózai",
+        "part":"2"
+    },
+    {
+        "id":"3",
+        "title":"A Karib-tenger kalózai: A világ végén",
+        "pictureURL":"http:\/\/img9.indafoto.hu\/5\/7\/24927_de9cf7fc237bf2217c1c576e4f026fee\/2130077_ba99306ae8579669cacc85f325cb6692_xl.jpg",
+        "description":"[placeholder]",
+        "isItASeries":"1",
+        "sereiesId":"1",
+        "seriesTitle":"A Karib-tenger kalózai",
+        "part":"3"
+    },
+    {
+        "id":"4",
+        "title":"A Karib-tenger kalózai: Ismeretlen vizeken",
+        "pictureURL":"http:\/\/img9.indafoto.hu\/5\/7\/24927_de9cf7fc237bf2217c1c576e4f026fee\/2130077_ba99306ae8579669cacc85f325cb6692_xl.jpg",
+        "description":"[placeholder]",
+        "isItASeries":"1",
+        "sereiesId":"1",
+        "seriesTitle":"A Karib-tenger kalózai",
+        "part":"4"
+    },
+    {
+        "id":"5",
+        "title":"A Karib-tenger kalózai: Salazar bosszúja",
+        "pictureURL":"http:\/\/img9.indafoto.hu\/5\/7\/24927_de9cf7fc237bf2217c1c576e4f026fee\/2130077_ba99306ae8579669cacc85f325cb6692_xl.jpg",
+        "description":"[placeholder]",
+        "isItASeries":"1",
+        "sereiesId":"1",
+        "seriesTitle":"A Karib-tenger kalózai",
+        "part":"5"
+    },
+    {
+        "id":"6",
+        "title":"TempMovie1",
+        "pictureURL":"[placeholder]",
+        "description":"[placeholder]",
+        "isItASeries":"0",
+        "sereiesId":"",
+        "seriesTitle":"",
+        "part":""
+    },
+    {
+        "id":"7",
+        "title":"TempMovie2",
+        "pictureURL":"[placeholder]",
+        "description":"[placeholder]",
+        "isItASeries":"0",
+        "sereiesId":"",
+        "seriesTitle":"",
+        "part":""
+    },
+    {
+        "id":"8",
+        "title":"TempMovie3",
+        "pictureURL":"[placeholder]",
+        "description":"[placeholder]",
+        "isItASeries":"0",
+        "sereiesId":"",
+        "seriesTitle":"",
+        "part":""
+    }
+]

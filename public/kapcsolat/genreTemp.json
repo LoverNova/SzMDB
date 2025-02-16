@@ -1,0 +1,43 @@
+[
+    {
+        "id":"1",
+        "genre":"fantasyfilm"
+    },
+    {
+        "id":"2",
+        "genre":"swashbuckler film"
+    },
+    {
+        "id":"3",
+        "genre":"kincsvadászos film"
+    },
+    {
+        "id":"4",
+        "genre":"filmvígjáték"
+    },
+    {
+        "id":"5",
+        "genre":
+        "akciófilm"
+    },
+    {
+        "id":"6",
+        "genre":"kalandfilm"
+    },
+    {
+        "id":"7",
+        "genre":"kalózfilm"
+    },
+    {
+        "id":"8",
+        "genre":"genre1"
+    },
+    {
+        "id":"9",
+        "genre":"genre2"
+    },
+    {
+        "id":"10",
+        "genre":"genre3"
+    }
+]

@@ -1,11 +1,11 @@
 <?php
 
-//Hasn't been checked
+//Works with the update
 require_once("kapcsolat.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $query = "SELECT nationalities.id, nationalities.nationality
-              FROM nationalities";
+    $query = "SELECT genre.id, genre.genre
+              FROM genre";
     
     $result = mysqli_query($connect, $query);
 
