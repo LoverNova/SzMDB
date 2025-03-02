@@ -31,11 +31,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 VALUES ('$movieId','$movieId')"; 
         if(mysqli_query($conn, $sql)){
             header('Content-Type: application/json');
-            echo json_encode('id' => "Sikeres feltöltés")
+            echo json_encode(['id' => "Sikeres feltöltés"]);
         }
         else{
             header('Content-Type: application/json');
-            echo('üzenet' => 'Hiányos adatok')
+            echo json_encode(['üzenet' => 'Hiányos adatok']);
         }
     }
 }
