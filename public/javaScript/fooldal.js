@@ -203,7 +203,6 @@ async function searchMovies() {
 searchButton.addEventListener("click", searchMovies);
 
 
-
 // Betöltés
 loadMovies();
 loadGenres();
