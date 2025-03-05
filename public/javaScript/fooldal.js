@@ -7,10 +7,10 @@ if (!header) {
 const userNameLink = document.createElement("a");
 userNameLink.textContent = "Név";
 userNameLink.style.textAlign = "center";
-userNameLink.style.cursor = "pointer";
-userNameLink.href = "profile";
+userNameLink.style.cursor = "pointer"; // Mutatja, hogy kattintható
+userNameLink.href = "profile"; // Profil oldal link
 userNameLink.style.padding = "10px";
-userNameLink.style.textDecoration = "line-through";
+userNameLink.style.textDecoration = "line-through"; // Áthúzza a szöveget
 header.appendChild(userNameLink);
 
 const profile = document.createElement("div");
@@ -20,7 +20,7 @@ profile.style.fontSize = "0.9em";
 const filters = document.createElement("div");
 filters.classList.add("filters");
 filters.style.position = "fixed";
-filters.style.left = "-250px";
+filters.style.left = "-250px"; //Alapértelmezetten elrejtve
 filters.style.top = "0";
 filters.style.width = "250px";
 filters.style.height = "100%";
@@ -46,9 +46,9 @@ filters.appendChild(filterList);
 
 document.addEventListener("mousemove", (event) => {
     if (event.clientX < 50) {
-        filters.style.left = "0px";
-    } else if (event.clientX > 300) {
-        filters.style.left = "-250px";
+        filters.style.left = "0px"; // Szűrősáv előugrik
+    } else if (event.clientX > 300) { // Ha elhagyja a sávot
+        filters.style.left = "-250px";  // Visszacsúszik
     }
 });
 
@@ -72,6 +72,7 @@ document.body.appendChild(searchBar);
 const movieList = document.createElement("div");
 movieList.classList.add("movie-list");
 document.body.appendChild(movieList);
+
 // Filmek lekérése és betöltése
 async function loadMovies() {
     const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
@@ -140,7 +141,7 @@ function displayMovies(movies) {
 // Filter
 async function filterMovies() {
     const selectedGenre = document.getElementById("genreFilter").value;
-    const movieResponse = await fetch('kapcsolat/movieTemp.json');
+    const movieResponse = await fetch('public/kapcsolat/movieTemp.json'); //Lekérés
     const allMovies = await movieResponse.json();
     
     if (!selectedGenre) {
@@ -148,7 +149,7 @@ async function filterMovies() {
         return;
     }
     
-    const movieGenreResponse = await fetch('kapcsolat/movieGenreTemp.json');
+    const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json'); //Lekérés
     const movieGenres = await movieGenreResponse.json();
     
     const filteredMovieIds = movieGenres
@@ -158,23 +159,50 @@ async function filterMovies() {
     const filteredMovies = allMovies.filter(movie => filteredMovieIds.includes(movie.id));
     displayMovies(filteredMovies);
 }
+// Include Fuse.js
+const script = document.createElement("script");
+script.src = "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6";
+document.head.appendChild(script);
 
 // Modositott kereső funkcio
 async function searchMovies() {
     const query = searchInput.value.toLowerCase().trim();
-    const movieResponse = await fetch('kapcsolat/movieTemp.json');
-    const movies = await movieResponse.json();
+    const movieResponse = await fetch('public/kapcsolat/movieTemp.json'); //Lekérés
     
-    const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query));
-    
-    if (filteredMovies.length === 0) {
-        alert(`A "${query}" nem található az oldalon`);
+    if (!movieResponse.ok) {
+        console.error("Error fetching movies:", movieResponse.statusText);
+        
+        return;
     }
-    
+    else{
+
+        
+        
+    }
+
+    const movies = await movieResponse.json();
+
+    // Initialize Fuse.js
+    const options = {
+        keys: ['title'],
+        threshold: 0.4
+    };
+    const fuse = new Fuse(movies, options);
+
+    const result = fuse.search(query);
+    const filteredMovies = result.map(({ item }) => item);
+
+    if (filteredMovies.length === 0) {
+        
+        location.reload()
+    }
+
     displayMovies(filteredMovies);
 }
 
 searchButton.addEventListener("click", searchMovies);
+
+
 
 // Betöltés
 loadMovies();
