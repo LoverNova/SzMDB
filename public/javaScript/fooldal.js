@@ -200,8 +200,13 @@ async function searchMovies() {
     displayMovies(filteredMovies);
 }
 
-searchButton.addEventListener("click", searchMovies);
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        searchMovies();
+    }
+});
 
+searchButton.addEventListener("click", searchMovies);
 
 // Betöltés
 loadMovies();
