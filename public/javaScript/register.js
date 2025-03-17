@@ -6,10 +6,15 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
       const email = document.getElementById("email").value;
       const password = document.getElementById("password1").value;
     
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("/SzMDB/public/kapcsolat/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify(
+          { 
+            "name" : name,
+            "email" : email, 
+            "password" : password 
+          })
       });
     
       const result = await response.json();

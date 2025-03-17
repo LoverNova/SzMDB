@@ -3,13 +3,16 @@
 require_once("kapcsolat.php");
 require_once("session.php");
 
-$error = '';
-if($_SERVER['REQUEST_METHoD'] == 'POST'){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!isset($_POST['email'])){
-        $error .= '<p class="error">Kérem adjon meg egy emailt!</p>';
+        http_response_code(404);
+        header("Content-type:application/json");
+        echo json_encode('error' => 'Hiányzó email!');
     }
     if (!isset(($_POST['password']))){
-        $error .= '<p class="error">Kérem adjon meg egy jelszót!</p>';
+        http_response_code(404);
+        header("Content-type:application/json");
+        echo json_encode('error' => 'Hiányzó jelszó!');
     }
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -24,7 +27,17 @@ if($_SERVER['REQUEST_METHoD'] == 'POST'){
                     $_SESSION["userId"] = $row['id'];
                     $_SESSION["user"] = $row;
                 }
+                else{
+                    http_response_code(404);
+                    header("Content-type:application/json");
+                    echo json_encode('error' => 'Hibás jelszó!');
+                }
             }
+        }
+        else{
+            http_response_code(404);
+            header("Content-type:application/json");
+            echo json_encode('error' => 'Rossz email!');
         }
     }
 }
