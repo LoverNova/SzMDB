@@ -6,6 +6,8 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
+  background: rgb(24,24,33);
+background: linear-gradient(90deg, rgba(24,24,33,1) 15%, rgba(255,155,2,1) 100%, rgba(255,244,0,1) 100%);
 }
 
 
@@ -15,7 +17,9 @@ header {
   justify-content:right;
   width: 100%;
   padding: 20px;
-  background-color: #f4f4f4;
+  background: rgb(24,24,33);
+background: linear-gradient(90deg, rgba(24,24,33,1) 15%, rgba(255,155,2,1) 100%, rgba(255,244,0,1) 100%);
+ 
   
   top: 0;
   left: 0;

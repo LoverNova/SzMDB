@@ -33,11 +33,11 @@ filters.style.overflowY = "auto";
 document.body.appendChild(filters);
 
 const filterTitle = document.createElement("h3");
-filterTitle.textContent = "Szűrők";
+filterTitle.textContent = "Szűrés";
 filters.appendChild(filterTitle);
 
 const filterList = document.createElement("ul");
-["Színészek", "Rendezők", "Stb..."].forEach((filter) => {
+[].forEach((filter) => {
     const listItem = document.createElement("li");
     listItem.textContent = filter;
     filterList.appendChild(listItem);
