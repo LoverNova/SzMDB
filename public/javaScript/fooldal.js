@@ -7,10 +7,10 @@ if (!header) {
 const userNameLink = document.createElement("a");
 userNameLink.textContent = "Név";
 userNameLink.style.textAlign = "center";
-userNameLink.style.cursor = "pointer"; // Mutatja, hogy kattintható
-userNameLink.href = "profile"; // Profil oldal link
+userNameLink.style.cursor = "pointer";
+userNameLink.href = "profile";
 userNameLink.style.padding = "10px";
-userNameLink.style.textDecoration = "line-through"; // Áthúzza a szöveget
+userNameLink.style.textDecoration = "line-through";
 header.appendChild(userNameLink);
 
 const profile = document.createElement("div");
@@ -20,14 +20,14 @@ profile.style.fontSize = "0.9em";
 const filters = document.createElement("div");
 filters.classList.add("filters");
 filters.style.position = "fixed";
-filters.style.left = "-250px"; //Alapértelmezetten elrejtve
+filters.style.left = "-250px";
 filters.style.top = "0";
 filters.style.width = "250px";
 filters.style.height = "100%";
-filters.style.background = "#f8f9fa";
+filters.style.background = "rgb(78, 78, 107)";
 filters.style.transition = "left 0.3s ease-in-out";
 filters.style.padding = "10px";
-filters.style.boxShadow = "2px 0 5px rgba(0,0,0,0.2)";
+filters.style.boxShadow = "2px 0 5px rgb(52, 52, 71)";
 filters.style.overflowY = "auto";
 
 document.body.appendChild(filters);
@@ -37,7 +37,8 @@ filterTitle.textContent = "Szűrés";
 filters.appendChild(filterTitle);
 
 const filterList = document.createElement("ul");
-[].forEach((filter) => {
+const exampleFilters = ["Akció", "Vígjáték", "Dráma"]; // Placeholder filters
+exampleFilters.forEach((filter) => {
     const listItem = document.createElement("li");
     listItem.textContent = filter;
     filterList.appendChild(listItem);
@@ -46,9 +47,9 @@ filters.appendChild(filterList);
 
 document.addEventListener("mousemove", (event) => {
     if (event.clientX < 50) {
-        filters.style.left = "0px"; // Szűrősáv előugrik
-    } else if (event.clientX > 300) { // Ha elhagyja a sávot
-        filters.style.left = "-250px";  // Visszacsúszik
+        filters.style.left = "0px";
+    } else if (event.clientX > 300) {
+        filters.style.left = "-250px";
     }
 });
 
@@ -73,7 +74,6 @@ const movieList = document.createElement("div");
 movieList.classList.add("movie-list");
 document.body.appendChild(movieList);
 
-// Filmek lekérése és betöltése
 async function loadMovies() {
     const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
     if (!movieResponse.ok) {
@@ -83,7 +83,7 @@ async function loadMovies() {
     const movies = await movieResponse.json();
     displayMovies(movies);
 }
-//Müfaj adatok lekérés és betöltés
+
 async function loadGenres() {
     const genreResponse = await fetch('public/kapcsolat/genreTemp.json');
     if (!genreResponse.ok) {
@@ -94,7 +94,6 @@ async function loadGenres() {
     populateGenreDropdown(genres);
 }
 
-// Legördülő menü feltöltése
 function populateGenreDropdown(genres) {
     const genreDropdown = document.createElement("select");
     genreDropdown.id = "genreFilter";
@@ -111,37 +110,60 @@ function populateGenreDropdown(genres) {
     genreDropdown.addEventListener("change", filterMovies);
 }
 
-// Filmek megjelenitése
 function displayMovies(movies) {
     movieList.innerHTML = "";
-    
+
     movies.forEach(movie => {
         const movieDiv = document.createElement("div");
         movieDiv.classList.add("movie");
         movieDiv.dataset.movieId = movie.id;
-        
+
         const poster = document.createElement("img");
         poster.src = movie.pictureURL;
-        poster.alt = "Movie Poster";
-        poster.style.width = "150px"; 
-        poster.style.height = "225px";
-        poster.style.objectFit = "cover"; 
-        
+        poster.alt = "Film poszter";
+        poster.classList.add("movie-poster");
+
         movieDiv.appendChild(poster);
-        
+
         const title = document.createElement("div");
         title.textContent = movie.title;
         title.classList.add("movie-title");
+
         movieDiv.appendChild(title);
-        
+
+        const favoriteButton = document.createElement("button");
+        favoriteButton.textContent = "Kedvenc";
+        favoriteButton.classList.add("favorite-button");
+        favoriteButton.addEventListener("click", () => addFavorite(movie.id));
+
+        movieDiv.appendChild(favoriteButton);
+
         movieList.appendChild(movieDiv);
     });
 }
 
-// Filter
+async function addFavorite(movieId) {
+    try {
+        const response = await fetch('public/kapcsolat/favorite.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ movieId })
+        });
+
+        if (response.ok) {
+            alert("A film hozzáadva a kedvencekhez!");
+        } else {
+            alert("Nem sikerült hozzáadni a filmet a kedvencekhez.");
+        }
+    } catch (error) {
+        console.error("Hiba a kedvenc hozzáadásakor:", error);
+        alert("Hiba történt a film kedvencekhez adása során.");
+    }
+}
+
 async function filterMovies() {
     const selectedGenre = document.getElementById("genreFilter").value;
-    const movieResponse = await fetch('public/kapcsolat/movieTemp.json'); //Lekérés
+    const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
     const allMovies = await movieResponse.json();
     
     if (!selectedGenre) {
@@ -149,7 +171,7 @@ async function filterMovies() {
         return;
     }
     
-    const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json'); //Lekérés
+    const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json');
     const movieGenres = await movieGenreResponse.json();
     
     const filteredMovieIds = movieGenres
@@ -159,45 +181,26 @@ async function filterMovies() {
     const filteredMovies = allMovies.filter(movie => filteredMovieIds.includes(movie.id));
     displayMovies(filteredMovies);
 }
-// Include Fuse.js
-const script = document.createElement("script");
-script.src = "https://cdn.jsdelivr.net/npm/fuse.js@6.4.6";
-document.head.appendChild(script);
 
-// Modositott kereső funkcio
 async function searchMovies() {
     const query = searchInput.value.toLowerCase().trim();
-    const movieResponse = await fetch('public/kapcsolat/movieTemp.json'); //Lekérés
-    
+    const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
     if (!movieResponse.ok) {
-        console.error("Error fetching movies:", movieResponse.statusText);
-        
+        console.error("Hiba a filmek lekérésekor:", movieResponse.statusText);
         return;
-    }
-    else{
-
-        
-        
     }
 
     const movies = await movieResponse.json();
-
-    // Initialize Fuse.js
-    const options = {
-        keys: ['title'],
-        threshold: 0.4
-    };
-    const fuse = new Fuse(movies, options);
-
-    const result = fuse.search(query);
-    const filteredMovies = result.map(({ item }) => item);
+    const filteredMovies = movies.filter(movie =>
+        movie.title.toLowerCase().includes(query)
+    );
 
     if (filteredMovies.length === 0) {
-        
-        location.reload()
+        alert("Nincs találat.");
+        location.reload(); // Optional: Reload the page if no results
+    } else {
+        displayMovies(filteredMovies);
     }
-
-    displayMovies(filteredMovies);
 }
 
 searchInput.addEventListener("keydown", (event) => {
@@ -208,6 +211,5 @@ searchInput.addEventListener("keydown", (event) => {
 
 searchButton.addEventListener("click", searchMovies);
 
-// Betöltés
 loadMovies();
 loadGenres();
