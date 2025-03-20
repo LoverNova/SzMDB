@@ -7,12 +7,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!isset($_POST['email'])){
         http_response_code(404);
         header("Content-type:application/json");
-        echo json_encode('error' => 'Hiányzó email!');
+        echo json_encode(['error' => 'Hiányzó email!']);
     }
     if (!isset(($_POST['password']))){
         http_response_code(404);
         header("Content-type:application/json");
-        echo json_encode('error' => 'Hiányzó jelszó!');
+        echo json_encode(['error' => 'Hiányzó jelszó!']);
     }
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -30,14 +30,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 else{
                     http_response_code(404);
                     header("Content-type:application/json");
-                    echo json_encode('error' => 'Hibás jelszó!');
+                    echo json_encode(['error' => 'Hibás jelszó!']);
                 }
             }
         }
         else{
             http_response_code(404);
             header("Content-type:application/json");
-            echo json_encode('error' => 'Rossz email!');
+            echo json_encode(['error' => 'Rossz email!']);
         }
     }
 }

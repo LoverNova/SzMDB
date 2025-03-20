@@ -34,44 +34,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 if($result){
                                     http_response_code(200);
                                     header("Content-type:application/json");
-                                    echo json_encode('message' => 'Sikeres regisztáció!');
+                                    echo json_encode(['message' => 'Sikeres regisztáció!']);
                                 }
                                 else{
                                     http_response_code(404);
                                     header("Content-type:application/json");
-                                    echo json_encode('error' => "Valami hiba történt!");
+                                    echo json_encode(['error' => "Valami hiba történt!"]);
                                 }
                             }
                         }
                         else{
                             http_response_code(404);
                             header("Content-type:application/json");
-                            echo json_encode('error' => 'Az email már haszálatban van!');
+                            echo json_encode(['error' => 'Az email már haszálatban van!']);
                         }
                     }
                 }
                 else{
                     http_response_code(404);
                     header("Content-type:application/json");
-                    echo json_encode('error' => "Nincs jelszó megadva!");
+                    echo json_encode(['error' => "Nincs jelszó megadva!"]);
                 }
             }
             else{
                 http_response_code(404);
                 header("Content-type:application/json");
-                echo json_encode('error' => "Email nincs megadva!");
+                echo json_encode(['error' => "Email nincs megadva!"]);
             }
         }
         else {
             http_response_code(404);
             header("Content-type:application/json");
-            echo json_encode('error' => "Felhasználó név nincs megadva!");
+            echo json_encode(['error' => "Felhasználó név nincs megadva!"]);
         }
     }
     else{
         http_response_code(404);
         header("Content-type:application/json");
-        echo json_encode('error' => 'Hiányos kérés.');
+        echo json_encode(['error' => 'Hiányos kérés.']);
     }
     $query->close();
     $insertQuery->close();
