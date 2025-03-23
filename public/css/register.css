@@ -60,7 +60,7 @@ body {
     color: #007bff;
     cursor: pointer;
     display: inline-block;
-    margin-top: 15px; /* Ezzel helyezzük lejjebb a linket */
+    margin-top: 15px; 
   }
   
   .footer .link:hover {
