@@ -1,13 +1,22 @@
 <?php
 require_once("kapcsolat.php");
+require_once("session.php");
+
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (!isset($_SESSION["userId"]) || !$_SESSION["user"]) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Felhasználó nincs bejelentkezve']);
+        exit;
+    }
+
     // Get the JSON input
     $input = json_decode(file_get_contents('php://input'), true);
 
     if (isset($input['movieId'])) {
         $movieId = $input['movieId'];
-        $clientId = 1; //Replacing needed, baked userID
+        $clientId = $_SESSION["userId"]; //Use logged user usedID
 
         // Insert
         $query = "INSERT INTO clientmovie (clientId, movieId, watchList, history) VALUES ('$clientId', '$movieId', 1, 0)";

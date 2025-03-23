@@ -57,7 +57,8 @@
         "isItASeries":"0",
         "sereiesId":"",
         "seriesTitle":"",
-        "part":""
+        "part":"",
+        "releaseYear": "2023"
     },
     {
         "id":"7",
@@ -67,7 +68,8 @@
         "isItASeries":"0",
         "sereiesId":"",
         "seriesTitle":"",
-        "part":""
+        "part":"",
+        "releaseYear": "2022"
     },
     {
         "id":"8",
@@ -77,7 +79,8 @@
         "isItASeries":"0",
         "sereiesId":"",
         "seriesTitle":"",
-        "part":""
+        "part":"",
+        "releaseYear": "2021"
     },
     {
         "id":"9",
@@ -147,16 +150,18 @@
         "isItASeries":"0",
         "sereiesId":"",
         "seriesTitle":"",
-        "part":""
+        "part":"",
+        "releaseYear": "2010"
     },
     {
         "id":"16",
         "title":"Mátrix",
         "pictureURL":"https://m.media-amazon.com/images/I/51EG732BV3L._AC_.jpg",
-        "description":"Egy hacker felfedezi a valóság valódi természet",
+        "description":"Egy hacker felfedezi a valóság valódi természetét.",
         "isItASeries":"0",
         "sereiesId":"",
         "seriesTitle":"",
-        "part":""
+        "part":"",
+        "releaseYear": "1999"
     }
 ]
