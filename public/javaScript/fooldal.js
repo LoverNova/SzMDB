@@ -1,21 +1,53 @@
-let header = document.querySelector("header"); 
+let header = document.querySelector("header");
 if (!header) {
     header = document.createElement("header");
     document.body.prepend(header);
 }
 
-const userNameLink = document.createElement("a");
-userNameLink.textContent = "Név";
-userNameLink.style.textAlign = "center";
-userNameLink.style.cursor = "pointer";
-userNameLink.href = "profile";
-userNameLink.style.padding = "10px";
-userNameLink.style.textDecoration = "line-through";
-header.appendChild(userNameLink);
+// Check if the user is logged in
+async function checkLoginStatus() {
+    const response = await fetch('public/kapcsolat/session.php');
+    const result = await response.json();
 
-const profile = document.createElement("div");
-profile.textContent = "Profil és menüpontok";
-profile.style.fontSize = "0.9em";
+    if (result.loggedIn) {
+        // Display user profile picture
+        const userNameLink = document.createElement("a");
+        userNameLink.href = "profile"; 
+        userNameLink.style.display = "inline-block";
+        userNameLink.style.padding = "10px";
+        userNameLink.style.cursor = "pointer";
+
+        const profileImage = document.createElement("img");
+        profileImage.src = result.profilePicture || "public/img/default-profile.png"; // Default profile picture 
+        profileImage.alt = "Profilkép";
+        profileImage.style.width = "80px";
+        profileImage.style.height = "80px";
+        profileImage.style.borderRadius = "50%";
+        profileImage.style.objectFit = "cover";
+
+        userNameLink.appendChild(profileImage);
+        header.appendChild(userNameLink);
+    } else {
+        // Display login and reg buttons
+        const loginButton = document.createElement("button");
+        loginButton.textContent = "Bejelentkezés";
+        loginButton.style.marginRight = "10px";
+        loginButton.addEventListener("click", () => {
+            window.location.href = "login";
+        });
+
+        const registerButton = document.createElement("button");
+        registerButton.textContent = "Regisztráció";
+        registerButton.addEventListener("click", () => {
+            window.location.href = "register";
+        });
+
+        header.appendChild(loginButton);
+        header.appendChild(registerButton);
+    }
+}
+
+checkLoginStatus();
 
 const filters = document.createElement("div");
 filters.classList.add("filters");
@@ -55,6 +87,11 @@ document.addEventListener("mousemove", (event) => {
 
 const profileSection = document.createElement("div");
 profileSection.classList.add("profile");
+
+const profile = document.createElement("div");
+profile.classList.add("profile-content");
+
+
 profileSection.appendChild(profile);
 
 const searchBar = document.createElement("div");
@@ -108,6 +145,29 @@ function populateGenreDropdown(genres) {
     
     document.querySelector(".filters").appendChild(genreDropdown);
     genreDropdown.addEventListener("change", filterMovies);
+
+    // Is it a series dropdown
+    const seriesDropdown = document.createElement("select");
+    seriesDropdown.id = "seriesFilter";
+    seriesDropdown.innerHTML = `
+        <option value="">Minden típus</option>
+        <option value="series">Sorozat</option>
+        <option value="movie">Film</option>
+    `;
+    document.querySelector(".filters").appendChild(seriesDropdown);
+    seriesDropdown.addEventListener("change", filterMovies);
+
+    /*// Releaseyear dropdown
+    const yearDropdown = document.createElement("select");
+    yearDropdown.id = "yearFilter";
+    yearDropdown.innerHTML = `
+        <option value="">Minden év</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+    `;>*/
+    document.querySelector(".filters").appendChild(yearDropdown);
+    yearDropdown.addEventListener("change", filterMovies);
 }
 
 function displayMovies(movies) {
@@ -127,13 +187,16 @@ function displayMovies(movies) {
 
         const title = document.createElement("div");
         title.textContent = movie.title;
+        title.style.color="white";
         title.classList.add("movie-title");
 
         movieDiv.appendChild(title);
 
         const favoriteButton = document.createElement("button");
-        favoriteButton.textContent = "Kedvenc";
+        
+        favoriteButton.innerHTML = "&#9733;"; // Unicode for a star icon
         favoriteButton.classList.add("favorite-button");
+        favoriteButton.style.alignContent = "left";
         favoriteButton.addEventListener("click", () => addFavorite(movie.id));
 
         movieDiv.appendChild(favoriteButton);
@@ -163,22 +226,34 @@ async function addFavorite(movieId) {
 
 async function filterMovies() {
     const selectedGenre = document.getElementById("genreFilter").value;
+    const selectedSeries = document.getElementById("seriesFilter").value;
+    const selectedYear = document.getElementById("yearFilter").value;
+
     const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
     const allMovies = await movieResponse.json();
-    
-    if (!selectedGenre) {
-        displayMovies(allMovies);
-        return;
+
+    let filteredMovies = allMovies;
+
+    if (selectedGenre) {
+        const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json');
+        const movieGenres = await movieGenreResponse.json();
+        const filteredMovieIds = movieGenres
+            .filter(mg => mg.genreId === selectedGenre)
+            .map(mg => mg.movieId);
+        filteredMovies = filteredMovies.filter(movie => filteredMovieIds.includes(movie.id));
     }
-    
-    const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json');
-    const movieGenres = await movieGenreResponse.json();
-    
-    const filteredMovieIds = movieGenres
-        .filter(mg => mg.genreId === selectedGenre)
-        .map(mg => mg.movieId);
-    
-    const filteredMovies = allMovies.filter(movie => filteredMovieIds.includes(movie.id));
+
+    if (selectedSeries) {
+        filteredMovies = filteredMovies.filter(movie => 
+            (selectedSeries === "series" && movie.isItASeries === "1") ||
+            (selectedSeries === "movie" && movie.isItASeries === "0")
+        );
+    }
+
+    if (selectedYear) {
+        filteredMovies = filteredMovies.filter(movie => movie.releaseYear === selectedYear);
+    }
+
     displayMovies(filteredMovies);
 }
 
@@ -197,7 +272,7 @@ async function searchMovies() {
 
     if (filteredMovies.length === 0) {
         alert("Nincs találat.");
-        location.reload(); // Optional: Reload the page if no results
+        location.reload(); 
     } else {
         displayMovies(filteredMovies);
     }
