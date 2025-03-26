@@ -211,5 +211,74 @@ searchInput.addEventListener("keydown", (event) => {
 
 searchButton.addEventListener("click", searchMovies);
 
+
+const bannerContainer = document.createElement("div");
+bannerContainer.classList.add("movie-banner");
+
+const bannerTrack = document.createElement("div");
+bannerTrack.classList.add("banner-track");
+bannerContainer.appendChild(bannerTrack);
+
+const arrowLeft = document.createElement("button");
+arrowLeft.classList.add("arrow-button", "arrow-left");
+arrowLeft.textContent = "<";
+bannerContainer.appendChild(arrowLeft);
+
+const arrowRight = document.createElement("button");
+arrowRight.classList.add("arrow-button", "arrow-right");
+arrowRight.textContent = ">";
+bannerContainer.appendChild(arrowRight);
+
+document.body.prepend(bannerContainer);
+
+let currentIndex = 0;
+
+async function loadMovieBanners() {
+    try {
+        const response = await fetch("public/kapcsolat/movieTemp.json");
+        if (!response.ok) {
+            throw new Error("Hiba a filmek betöltésekor");
+        }
+        const movies = await response.json();
+        displayMovieBanners(movies);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function displayMovieBanners(movies) {
+    bannerTrack.innerHTML = ""; // Töröljük az előző filmeket
+
+    const movie = movies[currentIndex];
+    const img = document.createElement("img");
+    img.src = movie.pictureURL;
+    img.alt = movie.title;
+    img.classList.add("banner-image");
+    bannerTrack.appendChild(img);
+
+    // Automatikus váltás 7,5 másodpercenként
+    setTimeout(() => {
+        currentIndex = (currentIndex + 1) % movies.length;
+        displayMovieBanners(movies);
+    }, 5000); // 7,5 másodperc
+
+   /* // Nyilak kezelése
+    arrowLeft.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + movies.length) % movies.length;
+        displayMovieBanners(movies);
+    });
+
+    arrowRight.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % movies.length;
+        displayMovieBanners(movies);
+    });*/
+}
+
+loadMovieBanners();
+
+
+
+
+
 loadMovies();
 loadGenres();
