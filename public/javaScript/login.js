@@ -78,20 +78,21 @@ document.addEventListener("DOMContentLoaded", () => {
         "email": email,
         "password": password
       })
-    })
+    });
 
-    const result = await response.json();
+     const result = await response.json();
 
-    if(response.ok){
+     if(response.ok){
       alert("Sikeres bejelentkezés!");
-    }
-    else{
-      document.getElementById("error-message").textContent = result.message;
-    }
-  })
+     }
+     else{
+       
+       console.log();
+       document.getElementById("error-message").textContent = result.message;
+     }
+  });
+  // "Bejelentkezés" link kattintása
+  document.getElementById("register-link").addEventListener("click", () => {
+    window.location.href = "register";
+  });
 })
-
-// "Bejelentkezés" link kattintása
-document.getElementById("register-link").addEventListener("click", () => {
-  window.location.href = "register";
-});
