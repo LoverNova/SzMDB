@@ -157,7 +157,7 @@ function populateGenreDropdown(genres) {
     document.querySelector(".filters").appendChild(seriesDropdown);
     seriesDropdown.addEventListener("change", filterMovies);
 
-    /*// Releaseyear dropdown
+    // Releaseyear dropdown
     const yearDropdown = document.createElement("select");
     yearDropdown.id = "yearFilter";
     yearDropdown.innerHTML = `
@@ -165,7 +165,7 @@ function populateGenreDropdown(genres) {
         <option value="2023">2023</option>
         <option value="2022">2022</option>
         <option value="2021">2021</option>
-    `;>*/
+    `;
     document.querySelector(".filters").appendChild(yearDropdown);
     yearDropdown.addEventListener("change", filterMovies);
 }
