@@ -69,7 +69,7 @@ filterTitle.textContent = "Szűrés";
 filters.appendChild(filterTitle);
 
 const filterList = document.createElement("ul");
-const exampleFilters = ["Akció", "Vígjáték", "Dráma"]; // Placeholder filters
+const exampleFilters = []; // Placeholder filters
 exampleFilters.forEach((filter) => {
     const listItem = document.createElement("li");
     listItem.textContent = filter;
@@ -294,7 +294,7 @@ const bannerTrack = document.createElement("div");
 bannerTrack.classList.add("banner-track");
 bannerContainer.appendChild(bannerTrack);
 
-const arrowLeft = document.createElement("button");
+/*const arrowLeft = document.createElement("button");
 arrowLeft.classList.add("arrow-button", "arrow-left");
 arrowLeft.textContent = "<";
 bannerContainer.appendChild(arrowLeft);
@@ -302,7 +302,7 @@ bannerContainer.appendChild(arrowLeft);
 const arrowRight = document.createElement("button");
 arrowRight.classList.add("arrow-button", "arrow-right");
 arrowRight.textContent = ">";
-bannerContainer.appendChild(arrowRight);
+bannerContainer.appendChild(arrowRight);*/
 
 document.body.prepend(bannerContainer);
 
@@ -335,10 +335,10 @@ function displayMovieBanners(movies) {
     setTimeout(() => {
         currentIndex = (currentIndex + 1) % movies.length;
         displayMovieBanners(movies);
-    }, 5000); // 7,5 másodperc
+    }, 5000); // 5 másodperc
 
-   /* // Nyilak kezelése
-    arrowLeft.addEventListener("click", () => {
+    // Nyilak kezelése
+    /*arrowLeft.addEventListener("click", () => {
         currentIndex = (currentIndex - 1 + movies.length) % movies.length;
         displayMovieBanners(movies);
     });

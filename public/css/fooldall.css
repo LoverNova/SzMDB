@@ -174,10 +174,10 @@ align-content: left ;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 60%;
   height: 100px;
   overflow: hidden;
-  background: rgb(11.37% 47.06% 45.49%);
+  background: transparent;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -197,7 +197,7 @@ align-content: left ;
   border-radius: 5px;
 }
 
-.arrow-button {
+/*.arrow-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -215,7 +215,7 @@ align-content: left ;
 
 .arrow-right {
   right: 10px;
-}
+}*/
 
 .banner-track {
   display: flex;
