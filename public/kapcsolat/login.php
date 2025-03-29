@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $email = trim($input['email']);
     $password = trim($input['password']);
 
-    $sql = "SELECT client.id, client.email, client.username, client.pass, client.admin FROM client WHERE email = '$email'";
+    $sql = "SELECT * FROM client WHERE email = '$email'";
     $result = mysqli_query($connect, $sql);
 
     if(mysqli_num_rows($result) === 0){
