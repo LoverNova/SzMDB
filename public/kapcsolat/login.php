@@ -35,9 +35,9 @@ try {
                 ];
                 http_response_code(200);
                 echo json_encode([
-                    'message' => 'Sikeres bejelentkezés!',
-                    'redirect' => '/SzMDB/' // Redirect to the main page
+                    'message' => 'Sikeres bejelentkezés!'
                 ]);
+                
             } else {
                 http_response_code(401);
                 echo json_encode(['error' => 'Hibás email vagy jelszó!']);

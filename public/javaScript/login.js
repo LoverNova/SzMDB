@@ -20,13 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 errorMessage.style.color = "green";
                 errorMessage.textContent = result.message;
 
+                window.location.href = "http://localhost/SzMDB/";
+
                 // Create a button for redirection
-                const redirectButton = document.createElement("button");
-                redirectButton.textContent = "Ugrás a főoldalra";
-                redirectButton.style.marginTop = "10px";
-                redirectButton.addEventListener("click", () => {
-                    window.location.href = result.redirect || "/SzMDB/";
-                });
+                // const redirectButton = document.createElement("button");
+                // redirectButton.textContent = "Ugrás a főoldalra";
+                // redirectButton.style.marginTop = "10px";
+                // redirectButton.addEventListener("click", () => {
+                //     window.location.href = result.redirect || "/SzMDB/";
+                // });
 
                 // Append the button below the success message
                 errorMessage.appendChild(redirectButton);
