@@ -34,4 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("login-link").addEventListener("click", () => {
     window.location.href = "login";
   });
+  document.getElementById("main-page").addEventListener("click", () => {
+    window.location.href = "/SzMDB/";
+  }); 
 });

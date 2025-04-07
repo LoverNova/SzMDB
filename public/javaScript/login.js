@@ -44,5 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // "Regisztráció" link kattintása
     document.getElementById("register-link").addEventListener("click", () => {
         window.location.href = "/SzMDB/register";
-    });
+    }); 
+    document.getElementById("main-page").addEventListener("click", () => {
+        window.location.href = "/SzMDB/";
+    }); 
 });
