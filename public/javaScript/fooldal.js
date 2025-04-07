@@ -18,7 +18,7 @@ async function checkLoginStatus() {
         userNameLink.style.cursor = "pointer";
 
         const profileImage = document.createElement("img");
-        profileImage.src = result.profilePicture || "public/img/default-profile.png"; // Default profile picture 
+        profileImage.src = result.profilePicture || "/SzMDB/public/img/default-profile.png"; // Default profile picture
         profileImage.alt = "Profilkép";
         profileImage.style.width = "80px";
         profileImage.style.height = "80px";
@@ -69,7 +69,7 @@ filterTitle.textContent = "Szűrés";
 filters.appendChild(filterTitle);
 
 const filterList = document.createElement("ul");
-const exampleFilters = []; // Placeholder filters
+const exampleFilters = ["Akció", "Vígjáték", "Dráma"]; // Placeholder filters
 exampleFilters.forEach((filter) => {
     const listItem = document.createElement("li");
     listItem.textContent = filter;
@@ -146,18 +146,7 @@ function populateGenreDropdown(genres) {
     document.querySelector(".filters").appendChild(genreDropdown);
     genreDropdown.addEventListener("change", filterMovies);
 
-    // Is it a series dropdown
-    const seriesDropdown = document.createElement("select");
-    seriesDropdown.id = "seriesFilter";
-    seriesDropdown.innerHTML = `
-        <option value="">Minden típus</option>
-        <option value="series">Sorozat</option>
-        <option value="movie">Film</option>
-    `;
-    document.querySelector(".filters").appendChild(seriesDropdown);
-    seriesDropdown.addEventListener("change", filterMovies);
-
-    // Releaseyear dropdown
+    // Define and create the yearDropdown element
     const yearDropdown = document.createElement("select");
     yearDropdown.id = "yearFilter";
     yearDropdown.innerHTML = `
@@ -168,6 +157,17 @@ function populateGenreDropdown(genres) {
     `;
     document.querySelector(".filters").appendChild(yearDropdown);
     yearDropdown.addEventListener("change", filterMovies);
+
+    // Is it a series dropdown
+    const seriesDropdown = document.createElement("select");
+    seriesDropdown.id = "seriesFilter";
+    seriesDropdown.innerHTML = `
+        <option value="">Minden típus</option>
+        <option value="series">Sorozat</option>
+        <option value="movie">Film</option>
+    `;
+    document.querySelector(".filters").appendChild(seriesDropdown);
+    seriesDropdown.addEventListener("change", filterMovies);
 }
 
 function displayMovies(movies) {
@@ -285,75 +285,6 @@ searchInput.addEventListener("keydown", (event) => {
 });
 
 searchButton.addEventListener("click", searchMovies);
-
-
-const bannerContainer = document.createElement("div");
-bannerContainer.classList.add("movie-banner");
-
-const bannerTrack = document.createElement("div");
-bannerTrack.classList.add("banner-track");
-bannerContainer.appendChild(bannerTrack);
-
-/*const arrowLeft = document.createElement("button");
-arrowLeft.classList.add("arrow-button", "arrow-left");
-arrowLeft.textContent = "<";
-bannerContainer.appendChild(arrowLeft);
-
-const arrowRight = document.createElement("button");
-arrowRight.classList.add("arrow-button", "arrow-right");
-arrowRight.textContent = ">";
-bannerContainer.appendChild(arrowRight);*/
-
-document.body.prepend(bannerContainer);
-
-let currentIndex = 0;
-
-async function loadMovieBanners() {
-    try {
-        const response = await fetch("public/kapcsolat/movieTemp.json");
-        if (!response.ok) {
-            throw new Error("Hiba a filmek betöltésekor");
-        }
-        const movies = await response.json();
-        displayMovieBanners(movies);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-function displayMovieBanners(movies) {
-    bannerTrack.innerHTML = ""; // Töröljük az előző filmeket
-
-    const movie = movies[currentIndex];
-    const img = document.createElement("img");
-    img.src = movie.pictureURL;
-    img.alt = movie.title;
-    img.classList.add("banner-image");
-    bannerTrack.appendChild(img);
-
-    // Automatikus váltás 7,5 másodpercenként
-    setTimeout(() => {
-        currentIndex = (currentIndex + 1) % movies.length;
-        displayMovieBanners(movies);
-    }, 5000); // 5 másodperc
-
-    // Nyilak kezelése
-    /*arrowLeft.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + movies.length) % movies.length;
-        displayMovieBanners(movies);
-    });
-
-    arrowRight.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % movies.length;
-        displayMovieBanners(movies);
-    });*/
-}
-
-loadMovieBanners();
-
-
-
-
 
 loadMovies();
 loadGenres();

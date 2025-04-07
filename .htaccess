@@ -1,10 +1,26 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Ha a public mappában lévő fájlra érkezett a kérés, szolgáld ki a fájlt
+  # Serve files from the public folder
   RewriteCond %{REQUEST_URI} ^.*public/(.*)
   RewriteRule ^(.*)$ public/%1 [END]
 
-  # Minden más esetben az index.php-t futtasd le
-  RewriteRule (.*)  index.php [QSA]
+  # Redirect logout to its script
+  RewriteRule ^logout$ public/kapcsolat/logout.php [L]
+
+  # Redirect all other requests to index.php
+  RewriteRule ^$ index.php [L] 
+  RewriteRule (.*) index.php [QSA]
 </IfModule>
+#   # #Deny access to sensitive files like ini configs
+#   <FilesMatch ".(ini)$"> 
+#   <IfModule !Mod_authz_core.c>
+#     Order Allow,Deny Deny from all 
+#   </IfModule>
+# </FileMatch>
+
+# Increase PHP upload limits
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 300
+php_value max_input_time 300

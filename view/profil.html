@@ -7,6 +7,14 @@
     <title>Profil</title>
 </head>
 <body>
+    <div class="profile-container">
+        <img id="profile-picture" class="profile-picture" src="/SzMDB/public/img/default-profile.png" alt="Profilkép">
+        <form id="profile-picture-form" enctype="multipart/form-data">
+            <input type="file" id="profile-picture-input" name="profilePicture" accept="image/*" required>
+            <button type="submit">Profilkép feltöltése</button>
+        </form>
+        <button id="remove-profile-picture-button">Profilkép eltávolítása</button>
+    </div>
     <script src="SzMDB/public/javaScript/profil.js"></script>
     <script src="SzMDB/public/javaScript/script.js"></script>
 </body>

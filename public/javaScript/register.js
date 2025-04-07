@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       document.getElementById("error-message").textContent = "Nem megegyező jelszavak!";
     }
-    
   });
 
   // "Bejelentkezés" link kattintása

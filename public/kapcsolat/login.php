@@ -3,42 +3,56 @@
 require_once("kapcsolat.php");
 require_once("session.php");
 
-header("Content-type:application/json");
+header("Content-Type: application/json");
+ob_start();
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $input = json_decode(file_get_contents("php://input"), true); // Parse JSON input
-   
-    if (!isset($input['email'])){
-        http_response_code(404);
-        echo json_encode(['error' => 'Hiányzó email!']);
-    }
-    if (!isset(($input['password']))){
-        http_response_code(406);
-        echo json_encode(['error' => 'Hiányzó jelszó!']);
-    }
+try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $input = json_decode(file_get_contents("php://input"), true);
 
-    $email = trim($input['email']);
-    $password = trim($input['password']);
-
-    $sql = "SELECT * FROM client WHERE email = '$email'";
-    $result = mysqli_query($connect, $sql);
-
-    if(mysqli_num_rows($result) === 0){
-        http_response_code(401);
-        echo json_encode(['error' => 'Rossz email!']);
-    }
-    else{
-        $row = mysqli_fetch_assoc($result);
-        if(password_verify($password, $row['pass'])){
-            http_response_code(200);
-            $_SESSION["userId"] = $row['id'];
-            $_SESSION["user"] = $row;
-            echo json_encode($_SESSION);
+        if (!isset($input['email']) || !isset($input['password'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Hiányzó email vagy jelszó!']);
+            exit;
         }
-        else{
-            http_response_code(402);
-            echo json_encode(['error' => "hibás jelszó"]);
+
+        $email = trim($input['email']);
+        $password = trim($input['password']);
+
+        if ($query = $connect->prepare("SELECT * FROM client WHERE email = ?")) {
+            $query->bind_param('s', $email);
+            $query->execute();
+            $result = $query->get_result();
+            $user = $result->fetch_assoc();
+
+            if ($user && password_verify($password, $user['pass'])) {
+                $_SESSION["userId"] = $user['id'];
+                $_SESSION["user"] = [
+                    "id" => $user['id'],
+                    "email" => $user['email'],
+                    "username" => $user['username'],
+                    "profilePicture" => $user['profilePicture'] // Store profile picture in session
+                ];
+                http_response_code(200);
+                echo json_encode([
+                    'message' => 'Sikeres bejelentkezés!',
+                    'redirect' => '/SzMDB/' // Redirect to the main page
+                ]);
+            } else {
+                http_response_code(401);
+                echo json_encode(['error' => 'Hibás email vagy jelszó!']);
+            }
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Adatbázis hiba!']);
         }
+    } else {
+        http_response_code(405);
+        echo json_encode(['error' => 'Helytelen HTTP metódus.']);
     }
-    
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Szerverhiba: ' . $e->getMessage()]);
+} finally {
+    ob_end_clean();
 }

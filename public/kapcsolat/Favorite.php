@@ -5,7 +5,7 @@ require_once("session.php");
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (!isset($_SESSION["userId"])) {
+  if (!isset($_SESSION["userId"]) || !$_SESSION["user"]) {
         http_response_code(401);
         echo json_encode(['error' => 'Felhasználó nincs bejelentkezve']);
         exit;
