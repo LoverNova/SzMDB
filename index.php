@@ -18,6 +18,9 @@
         case $defaultPath . "register":
             require_once("./view/register.html");
             break;
+        case $defaultPath . "addMovie":
+            require_once("./view/addMovie.html");
+            break;
         default:
             require_once("./view/404.html");
             break;
