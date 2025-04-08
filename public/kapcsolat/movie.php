@@ -24,8 +24,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    
+elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(empty($_POST['title'])){
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Nincs megadva cím!']);
+    }
+    elseif(empty($_POST['description'])){
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Nincs megadva film leírás!']);
+    }
+    elseif(empty($_POST['poster'])){
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Nincs feltöltve film poster!']);
+    }
+    else{
+        
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode($_POST);
+    }
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
