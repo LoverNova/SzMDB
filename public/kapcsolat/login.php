@@ -31,7 +31,8 @@ try {
                     "id" => $user['id'],
                     "email" => $user['email'],
                     "username" => $user['username'],
-                    "profilePicture" => $user['profilePicture'] // Store profile picture in session
+                    "profilePicture" => $user['profilePicture'], // Store profile picture in session
+                    "admin" => $user['admin']
                 ];
                 http_response_code(200);
                 echo json_encode([

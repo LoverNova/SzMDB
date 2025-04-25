@@ -8,6 +8,7 @@ if (!defined('SESSION_CHECK')) {
     if (isset($_SESSION["userId"]) && isset($_SESSION["user"])) {
         echo json_encode([
             "loggedIn" => true,
+            "admin" => $_SESSION["user"]["admin"],
             "profilePicture" => $_SESSION["user"]["profilePicture"] ?? null // Include profile picture
         ]);
     } else {

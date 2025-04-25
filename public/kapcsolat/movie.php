@@ -1,5 +1,4 @@
 <?php
-
 //Works with the update
 require_once("kapcsolat.php");
 
@@ -41,10 +40,29 @@ elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
         echo json_encode(['error' => 'Nincs feltöltve film poster!']);
     }
     else{
+        $poster = $_POST['poster'];
+        $description = $_POST['description'];
+        $title = $_POST['title'];
+        $series = 'false';
+        if(empty($_POST['series'])){
+            $series = 'true';
+        }
         
-        http_response_code(200);
-        header("Content-Type: application/json");
-        echo json_encode($_POST);
+
+
+        $sql = "INSERT INTO movie (title, description, pictureURL, isItASeries)
+                VALUE ('$title', '$description', '$poster', $series)";
+        $result = mysqli_query($connect, $sql);
+        if($result){
+            http_response_code(200);
+            header("Content-Type: application/json");
+            echo json_encode($_POST);
+        }
+        else{
+            http_response_code(404);
+            header("Content-Type: application/json");
+            echo json_encode(['error' => 'Szerver hiba!']);
+        }
     }
 }
 
@@ -58,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
             $sql = "DELETE FROM movie WHERE id='$id'";
             if(mysqli_query($conn, $sql)){
                 //sikeres törlés
-                echo "A felhasználó törölve";
+                echo "A film törölve";
             }
             else{
                 echo "törlés sikertelen";
