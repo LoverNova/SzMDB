@@ -3,22 +3,50 @@
 require_once("kapcsolat.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if(isset($_GET['movieId'])){
-        $movieId = $_GET['movieId'];
+    // if(isset($_GET['movieId'])){
+    //     $movieId = $_GET['movieId'];
 
-        $query = "SELECT movie.id, movie.title, movie.pictureURL, movie.description, movie.isItASeries, series.id AS 'sereiesId', series.title AS 'seriesTitle', movie.part
-                  FROM movie, series
-                  WHERE movie.seriesId = series.id AND movie.id = $movieId";
+    //     $query = "SELECT movie.id, movie.title, movie.pictureURL, movie.description, movie.isItASeries, series.id AS 'sereiesId', series.title AS 'seriesTitle', movie.part
+    //               FROM movie, series
+    //               WHERE movie.seriesId = series.id AND movie.id = $movieId";
         
-        $result = mysqli_query($connect, $query);
+    //     $result = mysqli_query($connect, $query);
     
-        if ($result) {
+    //     if ($result) {
+    //         $movie = [];
+    //         while ($row = mysqli_fetch_assoc($result)) {
+    //             $movie[] = $row;
+    //         }
+    //         header("Content-Type: application/json");
+    //         echo json_encode($movie);  
+    //     }
+    // }
+    if(!isset(($_GET['movieId']))){
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Nincs megadva cím!']);
+    }
+    else{
+        $movieId = $_GET['movieId'];
+        $sql = "SELECT movie.title, movie.description, movie.pictureURL
+                FROM movie
+                WHERE movie.id = $movieId";
+        
+        $result = mysqli_query($connect, $sql);
+
+        if(mysqli_num_rows($result) > 0){
             $movie = [];
             while ($row = mysqli_fetch_assoc($result)) {
                 $movie[] = $row;
             }
+            http_response_code(200);
             header("Content-Type: application/json");
-            echo json_encode($movie);  
+            echo json_encode($movie);
+        }
+        else{
+            http_response_code(404);
+            header("Content-Type: application/json");
+            echo json_encode(['error' => 'Nem létezik ilyen film!']);    
         }
     }
 }
