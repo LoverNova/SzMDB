@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="SzMDB/public/css/addMovie.css">
 </head>
 <body>
+    
         <form id="addMovieForm">
             <div class="row center">
                 <div class="col-sm-4">
-                    <div class="card">
+                    <div class="card text-center">
                         <input type="file" id="moviePoster" name="moviePoster" accept="image/*">
                     </div>
                 </div>
@@ -19,10 +20,17 @@
                     <div class="card">
                         <label for="title">Cím: </label>
                         <input type="text" name="title" id="title" class="textInput">
-                        <label for="description">Leírás</label>
+                        <label for="description">Leírás:</label>
                         <textarea name="description" cols="40" rows="5" class="textInput"></textarea>
-                        <label for="series">Sorozat-e:</label>
-                        <input type="checkbox" name="series" id="series">
+                        <p>
+                            Sorozat-e:
+                            <input type="checkbox" name="series" id="series">
+                        </p>
+                        <p>
+                            <label for="">Megjelenési év:</label>
+                            <input type="text" name="release" id="release">
+                        </p>
+                        <br>
                         <input type="submit" value="Feltöltés" class="btn btn-primary">
                     </div>
                 </div>

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if(!isset(($_GET['movieId']))){
         http_response_code(404);
         header("Content-Type: application/json");
-        echo json_encode(['error' => 'Nincs megadva cím!']);
+        echo json_encode(['error' => 'Nincs megadva movieId!']);
     }
     else{
         $movieId = $_GET['movieId'];
@@ -67,24 +67,33 @@ elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
         header("Content-Type: application/json");
         echo json_encode(['error' => 'Nincs feltöltve film poster!']);
     }
+    elseif(empty($_POST['release'])){
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Nincs megadva megjelenési év!']);
+    }
     else{
         $poster = $_POST['poster'];
         $description = $_POST['description'];
         $title = $_POST['title'];
         $series = 'false';
-        if(empty($_POST['series'])){
+        $release = $_POST['release'];
+        if(!empty($_POST['series'])){
             $series = 'true';
         }
         
 
 
-        $sql = "INSERT INTO movie (title, description, pictureURL, isItASeries)
-                VALUE ('$title', '$description', '$poster', $series)";
+        $sql = "INSERT INTO movie (title, description, pictureURL, isItASeries, releaseYear)
+                VALUE ('$title', '$description', '$poster', $series, $release)";
         $result = mysqli_query($connect, $sql);
         if($result){
+            $sql = "SELECT MAX(movie.id) as id
+                    FROM movie";
+            $result = mysqli_query($connect, $sql);
             http_response_code(200);
             header("Content-Type: application/json");
-            echo json_encode($_POST);
+            echo json_encode(mysqli_fetch_assoc($result));
         }
         else{
             http_response_code(404);

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $clientId = $_SESSION["userId"]; //Use logged user usedID
 
         // Insert
-        $query = "INSERT INTO clientmovie (clientId, movieId, watchList, history) VALUES ('$clientId', '$movieId', 1, 0)";
+        $query = "INSERT INTO clientmovie (clientId, movieId, watchList) VALUES ('$clientId', '$movieId', 1)";
         if (mysqli_query($connect, $query)) {
             http_response_code(200);
             echo json_encode(['message' => 'Movie added to favorites']);

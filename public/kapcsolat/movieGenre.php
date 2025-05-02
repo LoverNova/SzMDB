@@ -4,18 +4,28 @@
 require_once("kapcsolat.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $query = "SELECT moviegenre.movieId, moviegenre.genreId
-              FROM moviegenre";
-    
-    $result = mysqli_query($connect, $query);
-
-    if ($result) {
-        $nationalities = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $nationalities[] = $row;
-        }
+    if(!isset(($_GET['movieId']))){
+        http_response_code(404);
         header("Content-Type: application/json");
-        echo json_encode($nationalities);  
+        echo json_encode(['error' => 'Nincs megadva filmId!']);
+    }
+    else{
+        $movieId = $_GET['movieId'];
+        $sql = "SELECT genre.genre
+                FROM genre, moviegenre
+                WHERE genre.id = moviegenre.genreId AND moviegenre.movieId = $movieId";
+        
+        $result = mysqli_query($connect, $sql);
+    
+        if (mysqli_num_rows($result)  > 0) {
+            $nationalities = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $genres[] = $row;
+            }
+            http_response_code(200);
+            header("Content-Type: application/json");
+            echo json_encode($genres);  
+        }
     }
 }   
 

@@ -10,16 +10,26 @@ body {
 .center{
     margin: auto;
     width: 70%;
+    border: 3px solid green;
     padding: 10px;
-    left: 15%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     height: 65%;
 }
-.comment{
-    left: 0%;
-}
-.card{
-    height: var(--height);
+.mainCard{
+    min-height: 50%;
+    height: 90%;
     padding: 10px;
+}
+.genre{
+    background-color: lightgray;
+    width: min-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
 }
 #description{
     height: 55%;
@@ -27,6 +37,7 @@ body {
 }
 #poster{
     max-height: 100%;
+    max-width: 100%;
 }
 nav{
     padding: 100px;
@@ -36,11 +47,6 @@ nav{
     text-align: right;
 }
 div.padding{
-    min-height: 150px;
-    height: 15%;
-    border-color: aqua;
-}
-.userName{
-    width: 100%;
-    border-radius: 50%;
+    min-height: 10px;
+    height: 1%;
 }

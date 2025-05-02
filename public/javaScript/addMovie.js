@@ -18,13 +18,23 @@ fetch('public/kapcsolat/session.php')
         event.preventDefault();
     
         const formData = new FormData(this);
-        console.log(formData.get('moviePoster')['name']);
+        console.log(formData);
         formData.append('poster', formData.get('moviePoster')['name'])
     
         fetch("/SzMDB/public/kapcsolat/movie.php", {
             method: 'POST',
             body: formData
         })
+        .then(response => {
+            if(!response.ok){
+                response.json()
+                .then(error => {
+                    throw new Error(error.error || "Szerver hiba!")
+                })
+            }
+            return response.json();
+        })
+        .then(id => window.location.href = "/SzMDB/moviePage?movieId=" + id["id"]);
     });
 })
 .catch(Error => {
