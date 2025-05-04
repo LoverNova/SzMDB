@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // });
 
                 // Append the button below the success message
-                errorMessage.appendChild(redirectButton);
+                // errorMessage.appendChild(redirectButton);
             } else {
                 document.getElementById("error-message").textContent = result.error || "Hiba történt a bejelentkezés során.";
             }

@@ -20,39 +20,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }  
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if(
-        isset($_POST['genre'])//létezik-e a $_POST szuperglobál 'kategoria' kúlcsú eleme; azért 'kategoria' mert a select name paramétere a kulcs
-    ){
+    if(empty(!$_POST['genre'])){
         $genre = $_POST['genre'];
-
-        $sql = "INSERT INTO genre (genre)
-                VALUES ('$genre')";
-        if(mysqli_query($conn, $sql)){
-            header('Content-Type: application/json');
-            echo json_encode(['id' => "Sikeres feltöltés"]);
-        }
-        else{
+        if($genre == "null"){
+            http_response_code(400);
             header('Content-Type: application/json');
             echo json_encode(['üzenet' => 'Hiányos adatok']);
         }
-    }
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM genre WHERE id='$id' ";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result)>0){ //ha a visszaadott sorok száma nagyobb nulla
-            //volt ilyen id
-            $sql = "DELETE FROM genre WHERE id='$id'";
-            if(mysqli_query($conn, $sql)){
-                //sikeres törlés
-                echo "A felhasználó törölve";
+        else{
+            $sql = "SELECT genre.id 
+                    FROM genre 
+                    WHERE genre.genre LIKE '$genre'";
+            $result = mysqli_query($connect, $sql); 
+    
+            if(!mysqli_num_rows($result) > 0){
+                $sql = "INSERT INTO genre (genre)
+                        VALUES ('$genre')";
+                if(mysqli_query($connect, $sql)){
+                    $sql = "SELECT genre.id 
+                            FROM genre 
+                            WHERE genre.genre LIKE '$genre'";
+                    $result = mysqli_query($connect, $sql); 
+    
+                    http_response_code(200);
+                    header('Content-Type: application/json');
+                    echo json_encode(mysqli_fetch_assoc($result));
+                }
             }
             else{
-                echo "törlés sikertelen";
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode(mysqli_fetch_assoc($result));
             }
         }
+    }
+    else{
+        http_response_code(400);
+        header('Content-Type: application/json');
+        echo json_encode(['üzenet' => 'Hiányos adatok']);
     }
 }

@@ -31,22 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(
-        isset($_POST['movieId']) &&//létezik-e a $_POST szuperglobál 'kategoria' kúlcsú eleme; azért 'kategoria' mert a select name paramétere a kulcs
-        isset($_POST['genreId']) 
+        empty(!$_POST['movieId']) &&//létezik-e a $_POST szuperglobál 'kategoria' kúlcsú eleme; azért 'kategoria' mert a select name paramétere a kulcs
+        empty(!$_POST['genreId']) 
     ){
         $movieId = $_POST['movieId'];
         $genreId = $_POST['genreId'];
 
-        $sql = "INSERT INTO moviegenre (movieId, genreId) 
-                VALUES ('$movieId','$movieId')"; 
-        if(mysqli_query($conn, $sql)){
+        $sql = "INSERT INTO moviegenre (movieId, genreId)
+                VALUE ($movieId,$genreId)"; 
+        if(mysqli_query($connect, $sql)){
             header('Content-Type: application/json');
             echo json_encode(['id' => "Sikeres feltöltés"]);
         }
-        else{
-            header('Content-Type: application/json');
-            echo json_encode(['üzenet' => 'Hiányos adatok']);
-        }
+    }
+    else{
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Hiányos adatok']);
     }
 }
 
