@@ -1,26 +1,3 @@
-const header = document.createElement('div');
-header.className = 'header';
-
-const logo = document.createElement('div');
-logo.className = 'logo';
-
-const logoImg = document.createElement('img');
-logoImg.src = 'logo.png';
-logoImg.alt = 'Logo';
-
-const logoText = document.createElement('span');
-logoText.textContent = 'Név';
-
-logo.appendChild(logoImg);
-logo.appendChild(logoText);
-
-const menu = document.createElement('nav');
-menu.className = 'menu';
-
-header.appendChild(logo);
-header.appendChild(menu);
-document.body.appendChild(header);
-
 // Tartalom létrehozása
 const container = document.createElement('div');
 container.className = 'container';

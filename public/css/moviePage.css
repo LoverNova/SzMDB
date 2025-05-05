@@ -40,9 +40,9 @@ body {
     max-height: 100%;
     max-width: 100%;
 }
-nav{
+/* nav{
     padding: 100px;
-}
+} */
 .right{
     position: relative;
     text-align: right;

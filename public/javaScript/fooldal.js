@@ -1,53 +1,5 @@
-let header = document.querySelector("header");
-if (!header) {
-    header = document.createElement("header");
-    document.body.prepend(header);
-}
 
-// Check if the user is logged in
-async function checkLoginStatus() {
-    const response = await fetch('public/kapcsolat/session.php');
-    const result = await response.json();
-
-    if (result.loggedIn) {
-        // Display user profile picture
-        const userNameLink = document.createElement("a");
-        userNameLink.href = "profile"; 
-        userNameLink.style.display = "inline-block";
-        userNameLink.style.padding = "10px";
-        userNameLink.style.cursor = "pointer";
-
-        const profileImage = document.createElement("img");
-        profileImage.src = result.profilePicture || "/SzMDB/public/img/default-profile.png"; // Default profile picture
-        profileImage.alt = "Profilkép";
-        profileImage.style.width = "80px";
-        profileImage.style.height = "80px";
-        profileImage.style.borderRadius = "50%";
-        profileImage.style.objectFit = "cover";
-
-        userNameLink.appendChild(profileImage);
-        header.appendChild(userNameLink);
-    } else {
-        // Display login and reg buttons
-        const loginButton = document.createElement("button");
-        loginButton.textContent = "Bejelentkezés";
-        loginButton.style.marginRight = "10px";
-        loginButton.addEventListener("click", () => {
-            window.location.href = "login";
-        });
-
-        const registerButton = document.createElement("button");
-        registerButton.textContent = "Regisztráció";
-        registerButton.addEventListener("click", () => {
-            window.location.href = "register";
-        });
-
-        header.appendChild(loginButton);
-        header.appendChild(registerButton);
-    }
-}
-
-checkLoginStatus();
+// checkLoginStatus();
 
 const filters = document.createElement("div");
 filters.classList.add("filters");
@@ -236,7 +188,7 @@ async function addFavorite(movieId) {
         }
         return response.json();
     })
-    .then(data => {       
+    .then(data => {
         alert(data['message']);
     })
     .catch(error => {

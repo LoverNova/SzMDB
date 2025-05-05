@@ -12,8 +12,7 @@ body {
 body, html {
     overflow-x: hidden;
 }
-
-header {
+/* header {
   text-align: right;
   display: flex;
   justify-content:right;
@@ -25,7 +24,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
-}
+} */
 
 header button {
     padding: 10px 15px;
@@ -57,21 +56,7 @@ img {
   box-shadow: 7px 7px 5px rgb(6.67% 27.84% 26.67%);
 }
 
-.profile {
-  width: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  position: fixed;
-  top: 80px;
-  right: 0;  
-  z-index: 10;
-  display: block;  
-}
 
-body:not(.home) .profile {
-  display: none;
-}
 
 .search-container {
   display: flex;

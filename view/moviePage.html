@@ -6,77 +6,60 @@
     <title></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="SzMDB/public/css/moviePage.css">
+    <link rel="stylesheet" href="SzMDB/public/css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="http://localhost/SzMDB/">SzMDB</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+  <header class="navigation-header">
+    <nav>
+        <div class="logo-container">
+            <a href="">SzMDB</a>
+        </div>
+        <div class="navigation-items" id="navigation-items">
+            <a href="" id="addMovie" class="addMovie"></a>
+            <a href="login" id="loginProfile" class="addMovie">Bejelentkezés</a>
+        </div>
+        <div class="hamburger">
+            <span id="openHam">&#9776;</span>
+            <span id="closeHam">&#x2716;</span>
+        </div>
+    </nav>
+  </header> 
+  <div class="row center">
+      <div class="col-sm-4">
+          <div id="posterPlace" class="card mainCard">
+              
+          </div>
+      </div>
+      <div class="col-sm-8">
+          <div class="card mainCard">
+              <h2 id="title" class="title">Fílm címe</h2>
+              <h4>Leírás:</h4>
+              <div id="description" class="card">
+                  
               </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <span class="navbar-text right">
-            Navbar text with an inline element
-          </span>
-        </div>
-      </nav>
-    <div class="row center">
-        <div class="col-sm-4">
-            <div id="posterPlace" class="card mainCard">
-                
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="card mainCard">
-                <h2 id="title" class="title">Fílm címe</h2>
-                <h4>Leírás:</h4>
-                <div id="description" class="card">
-                    
-                </div>
-                <div class="padding"></div>
-                <h4>Műfajok:  </h4>
-                <div class="row" id="genre">
+              <div class="padding"></div>
+              <h4>Műfajok:  </h4>
+              <div class="row" id="genre">
 
+              </div>
+              <div class="padding"></div>
+              <div id="admin">
+                <div class="right">
+                  <form id="addGenre">
+                    <select name="genreId" id="selectGenre"></select>
+                    <button type="submit">Műfaj hozzáadása</button>
+                  </form>
+                  <div class="padding"></div>
+                  <form id="addNewGenre">
+                    <button type="submit">Új műfaj hozzáadása</button>
+                  </form>
                 </div>
-                <div class="padding"></div>
-                <div id="admin">
-                  <div class="right">
-                    <form id="addGenre">
-                      <select name="genreId" id="selectGenre"></select>
-                      <button type="submit">Műfaj hozzáadása</button>
-                    </form>
-                    <div class="padding"></div>
-                    <form id="addNewGenre">
-                      <button type="submit">Új műfaj hozzáadása</button>
-                    </form>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
+              </div>
+          </div>
+      </div>
+  </div>
 
     <script src="SzMDB/public/javaScript/moviePage.js"></script>
+    <script src="SzMDB/public/javaScript/script.js"></script>
 </body>
 </html>
