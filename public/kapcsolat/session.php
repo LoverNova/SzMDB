@@ -1,6 +1,7 @@
 <?php
 
 if (!defined('SESSION_CHECK')) {
+    
     session_start();
 
     header("Content-Type: application/json");

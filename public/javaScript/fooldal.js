@@ -112,17 +112,33 @@ movieList.classList.add("movie-list");
 document.body.appendChild(movieList);
 
 async function loadMovies() {
-    const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
-    if (!movieResponse.ok) {
-        console.error("Error fetching movies:", movieResponse.statusText);
-        return;
-    }
-    const movies = await movieResponse.json();
+    fetch('public/kapcsolat/movies.php')
+    .then(response => {
+        if(!response.ok){
+            response.json()
+            .then(error => {throw new Error(error.error || "Szerver hiba!")})
+        }
+        return response.json();
+    })
+    .then(movies => {
+        displayMovies(movies)
+    })
+
+    // const movieResponse = await fetch('public/kapcsolat/movies.php');
+    // console.log(movieResponse.json());
+    
+    // if (!movieResponse.ok) {
+    //     console.error("Error fetching movies:", movieResponse.statusText);
+    //     return;
+    // }
+    // const movies = await movieResponse.json();
+    // console.log();
+    
     displayMovies(movies);
 }
 
 async function loadGenres() {
-    const genreResponse = await fetch('public/kapcsolat/genreTemp.json');
+    const genreResponse = await fetch('public/kapcsolat/genre.php');
     if (!genreResponse.ok) {
         console.error("Error fetching genres:", genreResponse.statusText);
         return;
@@ -149,12 +165,23 @@ function populateGenreDropdown(genres) {
     // Define and create the yearDropdown element
     const yearDropdown = document.createElement("select");
     yearDropdown.id = "yearFilter";
-    yearDropdown.innerHTML = `
-        <option value="">Minden év</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-    `;
+
+    fetch('public/kapcsolat/year.php')
+    .then(response => {
+        if(!response.ok){
+            throw new Error(response.json().error);
+        }
+        return response.json();
+    })
+    .then(years => {     
+        html = `<option value="">Minden év</option>`
+
+        years.forEach(year => {
+            html += `<option value="${year['Year']}">${year['Year']}</option>`
+        })
+        yearDropdown.innerHTML = html;
+    })
+
     document.querySelector(".filters").appendChild(yearDropdown);
     yearDropdown.addEventListener("change", filterMovies);
 
@@ -174,54 +201,64 @@ function displayMovies(movies) {
     movieList.innerHTML = "";
 
     movies.forEach(movie => {
-        const movieDiv = document.createElement("div");
-        movieDiv.classList.add("movie");
-        movieDiv.dataset.movieId = movie.id;
+        html = 
+        `<div class="movie">
+            <div onclick="location.href='/SzMDB/moviePage?movieId=${movie.id}'">
+                <img src="public/uploads/moviePoster/${movie.pictureURL}" alt="Film poszter" class="movie-poster">
+                <div class="movie-title" style="color: white;">${movie.title}</div>
+            </div>
+            <button class="favorite-button" style="align-content: left;" onclick="addFavorite(${movie.id})">&#9733;</button>
+        </div>`;
 
-        const poster = document.createElement("img");
-        poster.src = movie.pictureURL;
-        poster.alt = "Film poszter";
-        poster.classList.add("movie-poster");
-
-        movieDiv.appendChild(poster);
-
-        const title = document.createElement("div");
-        title.textContent = movie.title;
-        title.style.color="white";
-        title.classList.add("movie-title");
-
-        movieDiv.appendChild(title);
-
-        const favoriteButton = document.createElement("button");
-        
-        favoriteButton.innerHTML = "&#9733;"; // Unicode for a star icon
-        favoriteButton.classList.add("favorite-button");
-        favoriteButton.style.alignContent = "left";
-        favoriteButton.addEventListener("click", () => addFavorite(movie.id));
-
-        movieDiv.appendChild(favoriteButton);
-
-        movieList.appendChild(movieDiv);
+        movieList.innerHTML += html;
     });
 }
 
-async function addFavorite(movieId) {
-    try {
-        const response = await fetch('public/kapcsolat/favorite.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ movieId })
-        });
+function moviePageRedirect(movieId){
+    // window.location.href = "/SzMDB/moviePage?movieId=" + movie.id;
+    console.log(movieId);
+    
+}
 
-        if (response.ok) {
-            alert("A film hozzáadva a kedvencekhez!");
-        } else {
-            alert("Nem sikerült hozzáadni a filmet a kedvencekhez.");
+async function addFavorite(movieId) {
+    formData = new FormData();
+    formData.append("movieId", movieId);
+
+    fetch('public/kapcsolat/favorite.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if(!response.ok){            
+            response.json().then(error => {
+                throw new Error("Ismeretlen hiba" || error);
+            })
         }
-    } catch (error) {
-        console.error("Hiba a kedvenc hozzáadásakor:", error);
-        alert("Hiba történt a film kedvencekhez adása során.");
-    }
+        return response.json();
+    })
+    .then(data => {       
+        alert(data['message']);
+    })
+    .catch(error => {
+        alert(error);
+    })
+
+    // try {
+    //     const response = await fetch('public/kapcsolat/favorite.php', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ movieId })
+    //     });
+
+    //     if (response.ok) {
+    //         alert("A film hozzáadva a kedvencekhez!");
+    //     } else {
+    //         alert("Nem sikerült hozzáadni a filmet a kedvencekhez.");
+    //     }
+    // } catch (error) {
+    //     console.error("Hiba a kedvenc hozzáadásakor:", error);
+    //     alert("Hiba történt a film kedvencekhez adása során.");
+    // }
 }
 
 async function filterMovies() {
@@ -229,13 +266,13 @@ async function filterMovies() {
     const selectedSeries = document.getElementById("seriesFilter").value;
     const selectedYear = document.getElementById("yearFilter").value;
 
-    const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
+    const movieResponse = await fetch('public/kapcsolat/movies.php');
     const allMovies = await movieResponse.json();
 
     let filteredMovies = allMovies;
 
     if (selectedGenre) {
-        const movieGenreResponse = await fetch('public/kapcsolat/movieGenreTemp.json');
+        const movieGenreResponse = await fetch('public/kapcsolat/movieGenre.php');
         const movieGenres = await movieGenreResponse.json();
         const filteredMovieIds = movieGenres
             .filter(mg => mg.genreId === selectedGenre)
@@ -259,7 +296,7 @@ async function filterMovies() {
 
 async function searchMovies() {
     const query = searchInput.value.toLowerCase().trim();
-    const movieResponse = await fetch('public/kapcsolat/movieTemp.json');
+    const movieResponse = await fetch('public/kapcsolat/movies.php');
     if (!movieResponse.ok) {
         console.error("Hiba a filmek lekérésekor:", movieResponse.statusText);
         return;

@@ -1,5 +1,5 @@
-console.log();
 const $_GET = window.location.search;
+console.log($_GET);
 
 fetch("/SzMDB/public/kapcsolat/movie.php" + $_GET)
 .then(response => {
@@ -44,21 +44,6 @@ fetch("/SzMDB/public/kapcsolat/movie.php" + $_GET)
         return data.json()
     })
     .then(result => {
-        if(!result["admin"] == 1){
-            throw new Error("Nincs adminisztrátori privilégumod!")
-        }
-
-        document.getElementById("admin").innerHTML = `<div class="right">
-                    <form id="addGenre">
-                      <select name="genreId" id="selectGenre"></select>
-                      <button type="submit">Műfaj hozzáadása</button>
-                    </form>
-                    <div class="padding"></div>
-                    <form id="addNewGenre">
-                      <button type="submit">Új műfaj hozzáadása</button>
-                    </form>
-                  </div>`
-
         fetch("/SzMDB/public/kapcsolat/genre.php")
         .then(responde => {
             if(!responde.ok){
@@ -76,6 +61,10 @@ fetch("/SzMDB/public/kapcsolat/movie.php" + $_GET)
             });
             document.getElementById('selectGenre').innerHTML = html;
         })
+
+        if(!result["admin"] == 1){
+            document.getElementById("admin").innerHTML = ``;
+        }
     })
 })
 .catch(error => {

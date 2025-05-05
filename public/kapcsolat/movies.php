@@ -4,9 +4,8 @@
 require_once("kapcsolat.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $query = "SELECT movie.id, movie.title, movie.pictureURL, movie.description, movie.isItASeries, series.id AS 'sereiesId', series.title AS 'seriesTitle', movie.part
-              FROM movie, series
-              WHERE movie.seriesId = series.id";
+    $query = "SELECT movie.id, movie.title, movie.pictureURL, movie.description, movie.isItASeries, movie.releaseYear
+              FROM movie";
     
     $result = mysqli_query($connect, $query);
 
