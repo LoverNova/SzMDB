@@ -4,19 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="SzMDB/public/css/style.css">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="SzMDB/public/css/404.css">
 </head>
 <body>
     <header>
         <ul class="navbar">
             <li class="navbar"><a href="/SzMDB/">Főoldal</a></li>
-            <li class="navbar right"> <a href="#about">Felhasználó</a></li>
+            <li class="navbar right"><a id="user-button">Felhasználó</a></li>
         </ul> 
     </header>
-    <h1>404</h1>
-    <p>Page not found<p>
-    <p><a href="/SzMDB/">Ugrás a címlapra</a></p>
+    <div class="content">
+        <h1>404</h1>
+        <p>Az oldal nem található.</p>
+        <p><a href="/SzMDB/">Ugrás a címlapra</a></p>
+    </div>
     <script src="SzMDB/public/javaScript/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const userButton = document.getElementById("user-button");
+            if (userButton) {
+                userButton.addEventListener("click", async () => {
+                    try {
+                        const response = await fetch("/SzMDB/public/kapcsolat/session.php");
+                        const sessionData = await response.json();
+
+                        if (sessionData.loggedIn) {
+                            window.location.href = "/SzMDB/profile";
+                        } else {
+                            window.location.href = "/SzMDB/login";
+                        }
+                    } catch (error) {
+                        console.error("Error checking session:", error);
+                        window.location.href = "/SzMDB/login";
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
