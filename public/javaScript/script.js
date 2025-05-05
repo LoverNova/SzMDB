@@ -30,7 +30,7 @@ fetch('public/kapcsolat/session.php')
         Profile = document.getElementById("loginProfile");
         Profile.classList.remove("addMovie")
         Profile.innerHTML = html;
-        Profile.href = "profile";
+        Profile.href = "/SzMDB/profile";
 
         if(result['admin'] === 1){
             html = `Add new movie`;

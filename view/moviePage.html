@@ -11,53 +11,55 @@
 <body>
   <header class="navigation-header">
     <nav>
-        <div class="logo-container">
-            <a href="">SzMDB</a>
-        </div>
-        <div class="navigation-items" id="navigation-items">
-            <a href="" id="addMovie" class="addMovie"></a>
-            <a href="login" id="loginProfile" class="addMovie">Bejelentkezés</a>
-        </div>
-        <div class="hamburger">
-            <span id="openHam">&#9776;</span>
-            <span id="closeHam">&#x2716;</span>
-        </div>
+      <div class="logo-container">
+        <a href="/SzMDB/">SzMDB</a>
+      </div>
+      <div class="navigation-items" id="navigation-items">
+        <a href="" id="addMovie" class="addMovie"></a>
+        <a href="/SzMDB/login" id="loginProfile" class="addMovie">Bejelentkezés</a>
+      </div>
+      <div class="hamburger">
+        <span id="openHam">&#9776;</span>
+        <span id="closeHam">&#x2716;</span>
+      </div>
     </nav>
-  </header> 
-  <div class="row center">
-      <div class="col-sm-4">
-          <div id="posterPlace" class="card mainCard">
-              
-          </div>
-      </div>
-      <div class="col-sm-8">
-          <div class="card mainCard">
-              <h2 id="title" class="title">Fílm címe</h2>
-              <h4>Leírás:</h4>
-              <div id="description" class="card">
-                  
-              </div>
-              <div class="padding"></div>
-              <h4>Műfajok:  </h4>
-              <div class="row" id="genre">
-
-              </div>
-              <div class="padding"></div>
-              <div id="admin">
-                <div class="right">
-                  <form id="addGenre">
-                    <select name="genreId" id="selectGenre"></select>
-                    <button type="submit">Műfaj hozzáadása</button>
-                  </form>
-                  <div class="padding"></div>
-                  <form id="addNewGenre">
-                    <button type="submit">Új műfaj hozzáadása</button>
-                  </form>
+  </header>
+  <section>
+    <div class="row center">
+        <div class="col-sm-4">
+            <div id="posterPlace" class="card mainCard">
+                
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card mainCard">
+                <h2 id="title" class="title">Fílm címe</h2>
+                <h4>Leírás:</h4>
+                <div id="description" class="card">
+                    
                 </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                <div class="padding"></div>
+                <h4>Műfajok:  </h4>
+                <div class="row" id="genre">
+  
+                </div>
+                <div class="padding"></div>
+                <div id="admin">
+                  <div class="right">
+                    <form id="addGenre">
+                      <select name="genreId" id="selectGenre"></select>
+                      <button type="submit">Műfaj hozzáadása</button>
+                    </form>
+                    <div class="padding"></div>
+                    <form id="addNewGenre">
+                      <button type="submit">Új műfaj hozzáadása</button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
 
     <script src="SzMDB/public/javaScript/moviePage.js"></script>
     <script src="SzMDB/public/javaScript/script.js"></script>
