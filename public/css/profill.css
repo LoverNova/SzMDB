@@ -84,51 +84,11 @@ body {
     margin-top: 20px;
 }
 
-.poster {
-    flex: 1;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    height: 300px;
-    background-color: #eaeaea;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2em;
-    color: #555;
-}
-
 .content {
     flex: 2;
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.title input, .description textarea {
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    padding: 5px;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.buttons {
-    margin-top: 20px;
-}
-
-.buttons button {
-    padding: 10px 15px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-}
-
-.buttons button:hover {
-    background-color: #0056b3;
 }
 
 .profile-container {
@@ -208,6 +168,51 @@ body {
 
 .profile-container button:hover {
     background-color: #0056b3;
+}
+
+.favorites-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px; /* Smaller width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.favorites-container h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.favorites-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 films per row */
+    gap: 15px;
+}
+
+.favorites-list .favorite-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.favorites-list .favorite-item img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.favorites-list .favorite-item .movie-title {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
 }
 
 h1 {

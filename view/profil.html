@@ -23,6 +23,10 @@
           </div>
         </nav>
     </header> 
+
+    <!-- Add the missing menu element -->
+    <div class="menu"></div>
+
     <div class="profile-container">
         <img id="profile-picture" class="profile-picture" src="/SzMDB/public/img/default-profile.png" alt="Profilkép">
         <form id="profile-picture-form" enctype="multipart/form-data">
@@ -31,6 +35,14 @@
         </form>
         <button id="remove-profile-picture-button">Profilkép eltávolítása</button>
     </div>
+
+    <div class="favorites-container">
+        <h2>Kedvencek</h2>
+        <div id="favorites-list" class="favorites-list">
+            <!-- Favorite movies will be dynamically loaded here -->
+        </div>
+    </div>
+
     <script src="SzMDB/public/javaScript/profil.js"></script>
     <script src="SzMDB/public/javaScript/script.js"></script>
 </body>

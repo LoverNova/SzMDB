@@ -54,26 +54,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (!isset($_SESSION["userId"])) {
+        http_response_code(401);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Felhasználó nincs bejelentkezve']);
+        exit;
+    }
 
-    // $input = json_decode(file_get_contents('php://input'), true);
+    $clientId = $_SESSION["userId"];
+    $sql = "SELECT movie.id, movie.title, movie.pictureURL 
+            FROM clientmovie 
+            INNER JOIN movie ON clientmovie.movieId = movie.id 
+            WHERE clientmovie.clientId = $clientId";
 
-    // if (isset($input['movieId'])) {
-    //     $movieId = $input['movieId'];
-    //     $clientId = $_SESSION["userId"]; //Use logged user usedID
+    $result = mysqli_query($connect, $sql);
 
-    //     // Insert
-    //     $query = "INSERT INTO clientmovie (clientId, movieId, watchList) VALUES ('$clientId', '$movieId', 1)";
-    //     if (mysqli_query($connect, $query)) {
-    //         http_response_code(200);
-    //         echo json_encode(['message' => 'Movie added to favorites']);
-    //     } else {
-    //         http_response_code(500);
-    //         echo json_encode(['error' => 'Failed to add movie to favorites']);
-    //     }
-    // } else {
-    //     http_response_code(400);
-    //     echo json_encode(['error' => 'Invalid input']);
-    // }
+    if ($result) {
+        $favorites = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $favorites[] = $row;
+        }
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode($favorites);
+    } else {
+        http_response_code(500);
+        header("Content-Type: application/json");
+        echo json_encode(['error' => 'Hiba a kedvencek lekérésekor']);
+    }
 } else {
     http_response_code(405);
     echo json_encode(['error' => 'Method not allowed']);

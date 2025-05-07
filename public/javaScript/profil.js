@@ -1,60 +1,3 @@
-// Tartalom létrehozása
-const container = document.createElement('div');
-container.className = 'container';
-
-const poster = document.createElement('div');
-poster.className = 'poster';
-poster.textContent = 'Poszter';
-
-const content = document.createElement('div');
-content.className = 'content';
-
-const titleContainer = document.createElement('div');
-titleContainer.className = 'title';
-
-const titleInput = document.createElement('input');
-titleInput.type = 'text';
-titleInput.id = 'title';
-titleInput.value = 'Cím';
-
-titleContainer.appendChild(titleInput);
-
-const descriptionContainer = document.createElement('div');
-descriptionContainer.className = 'description';
-
-const descriptionTextarea = document.createElement('textarea');
-descriptionTextarea.id = 'description';
-descriptionTextarea.rows = 5;
-descriptionTextarea.textContent = 'Leírás';
-
-descriptionContainer.appendChild(descriptionTextarea);
-
-const buttons = document.createElement('div');
-buttons.className = 'buttons';
-
-const titleButton = document.createElement('button');
-titleButton.textContent = 'Cím módosítása';
-titleButton.onclick = function () {
-    alert('A cím: ' + titleInput.value);
-};
-
-const descriptionButton = document.createElement('button');
-descriptionButton.textContent = 'Leírás módosítása';
-descriptionButton.onclick = function () {
-    alert('A leírás: ' + descriptionTextarea.value);
-};
-
-buttons.appendChild(titleButton);
-buttons.appendChild(descriptionButton);
-
-content.appendChild(titleContainer);
-content.appendChild(descriptionContainer);
-content.appendChild(buttons);
-
-container.appendChild(poster);
-container.appendChild(content);
-document.body.appendChild(container);
-
 document.addEventListener("DOMContentLoaded", async () => {
     const profilePictureForm = document.getElementById("profile-picture-form");
     const profilePictureInput = document.getElementById("profile-picture-input");
@@ -65,41 +8,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sessionData = await response.json();
 
     const menu = document.querySelector(".menu");
-    menu.innerHTML = ""; // Clear existing menu items
+    if (menu) {
+        menu.innerHTML = ""; // Clear existing menu items
 
-    if (sessionData.loggedIn) {
-        // Update profile picture
-        if (profilePicture && sessionData.profilePicture) {
-            profilePicture.src = sessionData.profilePicture;
+        if (sessionData.loggedIn) {
+            // Update profile picture
+            if (profilePicture && sessionData.profilePicture) {
+                profilePicture.src = sessionData.profilePicture;
+            }
+
+            // Update menu for logged-in user
+            const profileLink = document.createElement("a");
+            profileLink.href = "/SzMDB/profile";
+            profileLink.textContent = "Profil";
+            profileLink.className = "menu-item";
+
+            const logoutLink = document.createElement("a");
+            logoutLink.href = "/SzMDB/logout";
+            logoutLink.textContent = "Kijelentkezés";
+            logoutLink.className = "menu-item";
+
+            menu.appendChild(profileLink);
+            menu.appendChild(logoutLink);
+        } else {
+            // Update menu for guest user
+            const loginLink = document.createElement("a");
+            loginLink.href = "/SzMDB/login";
+            loginLink.textContent = "Bejelentkezés";
+            loginLink.className = "menu-item";
+
+            const registerLink = document.createElement("a");
+            registerLink.href = "/SzMDB/register";
+            registerLink.textContent = "Regisztráció";
+            registerLink.className = "menu-item";
+
+            menu.appendChild(loginLink);
+            menu.appendChild(registerLink);
         }
-
-        // Update menu for logged-in user
-        const profileLink = document.createElement("a");
-        profileLink.href = "/SzMDB/profile";
-        profileLink.textContent = "Profil";
-        profileLink.className = "menu-item";
-
-        const logoutLink = document.createElement("a");
-        logoutLink.href = "/SzMDB/logout";
-        logoutLink.textContent = "Kijelentkezés";
-        logoutLink.className = "menu-item";
-
-        menu.appendChild(profileLink);
-        menu.appendChild(logoutLink);
     } else {
-        // Update menu for guest user
-        const loginLink = document.createElement("a");
-        loginLink.href = "/SzMDB/login";
-        loginLink.textContent = "Bejelentkezés";
-        loginLink.className = "menu-item";
-
-        const registerLink = document.createElement("a");
-        registerLink.href = "/SzMDB/register";
-        registerLink.textContent = "Regisztráció";
-        registerLink.className = "menu-item";
-
-        menu.appendChild(loginLink);
-        menu.appendChild(registerLink);
+        console.warn("Menu element not found in the DOM.");
     }
 
     if (profilePictureForm) {
@@ -169,4 +116,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (sessionData.loggedIn && window.location.pathname !== "/SzMDB/profile") {
         window.location.href = "/SzMDB/"; // Redirect to the main page
     }
+
+    loadFavorites(); // Load favorites when the page loads
 });
+
+// Remove the "Poszter", "Cím", and "Leírás" sections and their buttons
+const container = document.querySelector('.container');
+if (container) {
+    container.remove();
+}
+
+async function loadFavorites() {
+    const favoritesList = document.getElementById("favorites-list");
+
+    try {
+        const response = await fetch("/SzMDB/public/kapcsolat/favorite.php");
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error loading favorites:", errorData.error || "Ismeretlen hiba");
+            throw new Error(errorData.error || "Hiba a kedvencek lekérésekor.");
+        }
+
+        const favorites = await response.json();
+        favoritesList.innerHTML = ""; // Clear existing content
+
+        favorites.forEach(movie => {
+            const favoriteItem = document.createElement("div");
+            favoriteItem.classList.add("favorite-item");
+
+            favoriteItem.innerHTML = `
+                <a href="/SzMDB/moviePage?movieId=${movie.id}" class="favorite-link">
+                    <img src="/SzMDB/public/uploads/moviePoster/${movie.pictureURL}" alt="${movie.title}">
+                    <div class="movie-title">${movie.title}</div>
+                </a>
+            `;
+
+            favoritesList.appendChild(favoriteItem);
+        });
+    } catch (error) {
+        console.error("Error loading favorites:", error);
+        favoritesList.innerHTML = "<p>Nem sikerült betölteni a kedvenceket.</p>";
+    }
+}
