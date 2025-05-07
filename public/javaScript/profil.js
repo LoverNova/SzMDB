@@ -62,11 +62,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                     body: formData,
                 });
 
-                const responseText = await uploadResponse.text(); // Get raw response text
-                console.log("Raw Response:", responseText); // Log raw response for debugging
+                const responseText = await uploadResponse.text(); 
+                console.log("Raw Response:", responseText); 
 
                 try {
-                    const result = JSON.parse(responseText); // Parse JSON response
+                    const result = JSON.parse(responseText); 
 
                     if (uploadResponse.ok) {
                         if (profilePicture) {
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadFavorites(); // Load favorites when the page loads
 });
 
-// Remove the "Poszter", "Cím", and "Leírás" sections and their buttons
+
 const container = document.querySelector('.container');
 if (container) {
     container.remove();
