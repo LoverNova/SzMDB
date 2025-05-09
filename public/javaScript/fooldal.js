@@ -21,12 +21,8 @@ filterTitle.textContent = "Szűrés";
 filters.appendChild(filterTitle);
 
 const filterList = document.createElement("ul");
-const exampleFilters = ["Akció", "Vígjáték", "Dráma"]; // Placeholder filters
-exampleFilters.forEach((filter) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = filter;
-    filterList.appendChild(listItem);
-});
+
+
 filters.appendChild(filterList);
 
 document.addEventListener("mousemove", (event) => {
