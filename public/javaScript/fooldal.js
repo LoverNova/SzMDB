@@ -1,18 +1,34 @@
-
 // checkLoginStatus();
 
 const filters = document.createElement("div");
 filters.classList.add("filters");
 filters.style.position = "fixed";
-filters.style.left = "-250px";
+filters.style.left = "-225px"; // Sidebar visibility
 filters.style.top = "0";
 filters.style.width = "250px";
-filters.style.height = "100%";
+filters.style.height = "100vh"; 
 filters.style.background = "rgb(78, 78, 107)";
 filters.style.transition = "left 0.3s ease-in-out";
 filters.style.padding = "10px";
 filters.style.boxShadow = "2px 0 5px rgb(52, 52, 71)";
-filters.style.overflowY = "auto";
+filters.style.overflowX = "hidden"; 
+
+// Sidebar visual indicator
+const sidebarIndicator = document.createElement("div");
+sidebarIndicator.style.position = "absolute";
+sidebarIndicator.style.top = "50%";
+sidebarIndicator.style.right = "-20px";
+sidebarIndicator.style.width = "40px"; // Gray rectangle width
+sidebarIndicator.style.height = "60px"; 
+sidebarIndicator.style.background = "rgb(42, 42, 57)"; // Darker gray
+sidebarIndicator.style.borderRadius = "0 5px 5px 0";
+sidebarIndicator.style.cursor = "pointer";
+sidebarIndicator.title = "Szűrés megnyitása";
+sidebarIndicator.addEventListener("click", () => {
+    filters.style.left = filters.style.left === "0px" ? "-225px" : "0px"; // Toggle sidebar visibility
+});
+
+filters.appendChild(sidebarIndicator);
 
 document.body.appendChild(filters);
 
@@ -25,11 +41,12 @@ const filterList = document.createElement("ul");
 
 filters.appendChild(filterList);
 
-document.addEventListener("mousemove", (event) => {
+
+document.removeEventListener("mousemove", (event) => {
     if (event.clientX < 50) {
-        filters.style.left = "0px";
+        filters.style.left = "0px"; 
     } else if (event.clientX > 300) {
-        filters.style.left = "-250px";
+        filters.style.left = "-200px"; //Sidebar hide
     }
 });
 
@@ -72,16 +89,6 @@ async function loadMovies() {
         displayMovies(movies)
     })
 
-    // const movieResponse = await fetch('public/kapcsolat/movies.php');
-    // console.log(movieResponse.json());
-    
-    // if (!movieResponse.ok) {
-    //     console.error("Error fetching movies:", movieResponse.statusText);
-    //     return;
-    // }
-    // const movies = await movieResponse.json();
-    // console.log();
-    
     displayMovies(movies);
 }
 
@@ -98,6 +105,7 @@ async function loadGenres() {
 function populateGenreDropdown(genres) {
     const genreDropdown = document.createElement("select");
     genreDropdown.id = "genreFilter";
+    genreDropdown.style.width = "200px"; 
     genreDropdown.innerHTML = `<option value="">Minden műfaj</option>`;
     
     genres.forEach(genre => {
@@ -110,9 +118,10 @@ function populateGenreDropdown(genres) {
     document.querySelector(".filters").appendChild(genreDropdown);
     genreDropdown.addEventListener("change", filterMovies);
 
-    // Define and create the yearDropdown element
+   
     const yearDropdown = document.createElement("select");
     yearDropdown.id = "yearFilter";
+    yearDropdown.style.width = "200px";
 
     fetch('public/kapcsolat/year.php')
     .then(response => {
@@ -136,6 +145,7 @@ function populateGenreDropdown(genres) {
     // Is it a series dropdown
     const seriesDropdown = document.createElement("select");
     seriesDropdown.id = "seriesFilter";
+    seriesDropdown.style.width = "200px";
     seriesDropdown.innerHTML = `
         <option value="">Minden típus</option>
         <option value="series">Sorozat</option>
@@ -163,7 +173,6 @@ function displayMovies(movies) {
 }
 
 function moviePageRedirect(movieId){
-    // window.location.href = "/SzMDB/moviePage?movieId=" + movie.id;
     console.log(movieId);
     
 }
@@ -190,23 +199,6 @@ async function addFavorite(movieId) {
     .catch(error => {
         alert(error);
     })
-
-    // try {
-    //     const response = await fetch('public/kapcsolat/favorite.php', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ movieId })
-    //     });
-
-    //     if (response.ok) {
-    //         alert("A film hozzáadva a kedvencekhez!");
-    //     } else {
-    //         alert("Nem sikerült hozzáadni a filmet a kedvencekhez.");
-    //     }
-    // } catch (error) {
-    //     console.error("Hiba a kedvenc hozzáadásakor:", error);
-    //     alert("Hiba történt a film kedvencekhez adása során.");
-    // }
 }
 
 async function filterMovies() {
@@ -271,5 +263,79 @@ searchInput.addEventListener("keydown", (event) => {
 
 searchButton.addEventListener("click", searchMovies);
 
+/*
+//Footer on the bottom
+window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight ;
+
+    if (scrollTop + windowHeight >= documentHeight) {
+        footer.style.display = "block";
+    } else {
+        footer.style.display = "none";
+    }
+});*/
+//Filler for the bottom
+document.body.style.paddingBottom = "200px"; 
+
+const spacer = document.createElement("div");
+spacer.style.height = "200px"; 
+spacer.style.visibility = "hidden"; 
+document.body.appendChild(spacer);
+
+const nav = document.querySelector("nav");
+
+// Check if the user is logged 
+fetch('public/kapcsolat/session.php')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Szerver hiba");
+        }
+        return response.json();
+    })
+    .then(result => {
+        if (result.loggedIn) {
+            // Create the logout 
+            const logoutButton = document.createElement("button");
+            logoutButton.textContent = "Kijelentkezés";
+            logoutButton.style.marginRight = "10px";
+            logoutButton.style.padding = "5px 10px";
+            logoutButton.style.background = "rgb(42, 42, 57)";
+            logoutButton.style.color = "white";
+            logoutButton.style.border = "none";
+            logoutButton.style.borderRadius = "5px";
+            logoutButton.style.cursor = "pointer";
+            logoutButton.addEventListener("click", () => {
+                window.location.href = "/SzMDB/public/kapcsolat/logout.php";
+            });
+
+            
+            const nav = document.querySelector("nav");
+            nav.appendChild(logoutButton);
+        }
+    })
+    .catch(error => {
+        console.error("Error checking login status:", error);
+    });
+/*
+//Footer
+const footer = document.createElement("footer");
+footer.style.background = "rgb(78, 78, 107)";
+footer.style.color = "white";
+footer.style.textAlign = "center";
+footer.style.padding = "10px";
+footer.style.position = "fixed";
+footer.style.bottom = "0";
+footer.style.width = "100%";
+footer.style.boxShadow = "0 -2px 5px rgb(52, 52, 71)";
+footer.style.display = "none"; //Hide it
+
+footer.innerHTML = `
+    <p>Kapcsolat: info@szmdb.com</p>
+    <p>&copy; ${new Date().getFullYear()} SzMDB.</p>
+`;
+
+document.body.appendChild(footer);*/
 loadMovies();
 loadGenres();
