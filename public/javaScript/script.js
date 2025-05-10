@@ -32,6 +32,8 @@ fetch('public/kapcsolat/session.php')
         Profile.innerHTML = html;
         Profile.href = "/SzMDB/profile";
 
+        document.getElementById('logOut').innerHTML = "Kijelentkezés"
+
         if(result['admin'] === 1){
             html = `Add new movie`;
 
@@ -43,48 +45,48 @@ fetch('public/kapcsolat/session.php')
 })
 
 
-async function checkLoginStatus() {
-    const response = await fetch('public/kapcsolat/session.php');
-    const result = await response.json();
+// async function checkLoginStatus() {
+//     const response = await fetch('public/kapcsolat/session.php');
+//     const result = await response.json();
 
-    if (result.loggedIn) {
-        // Display user profile picture
-        const userNameLink = document.createElement("a");
-        userNameLink.href = "profile"; 
-        userNameLink.style.display = "inline-block";
-        userNameLink.style.padding = "10px";
-        userNameLink.style.cursor = "pointer";
+//     if (result.loggedIn) {
+//         // Display user profile picture
+//         const userNameLink = document.createElement("a");
+//         userNameLink.href = "profile"; 
+//         userNameLink.style.display = "inline-block";
+//         userNameLink.style.padding = "10px";
+//         userNameLink.style.cursor = "pointer";
 
-        const profileImage = document.createElement("img");
-        profileImage.src = result.profilePicture || "/SzMDB/public/img/default-profile.png"; // Default profile picture
-        profileImage.alt = "Profilkép";
-        profileImage.style.width = "80px";
-        profileImage.style.height = "80px";
-        profileImage.style.borderRadius = "50%";
-        profileImage.style.objectFit = "cover";
+//         const profileImage = document.createElement("img");
+//         profileImage.src = result.profilePicture || "/SzMDB/public/img/default-profile.png"; // Default profile picture
+//         profileImage.alt = "Profilkép";
+//         profileImage.style.width = "80px";
+//         profileImage.style.height = "80px";
+//         profileImage.style.borderRadius = "50%";
+//         profileImage.style.objectFit = "cover";
 
-        userNameLink.appendChild(profileImage);
-        header.appendChild(userNameLink);
-    } else {
-        loginProfile = document.getElementById('loginProfile');
+//         userNameLink.appendChild(profileImage);
+//         header.appendChild(userNameLink);
+//     } else {
+//         loginProfile = document.getElementById('loginProfile');
 
-        loginProfile.innerHTML;
+//         loginProfile.innerHTML;
 
-        // Display login and reg buttons
-        // const loginButton = document.createElement("button");
-        // loginButton.textContent = "Bejelentkezés";
-        // loginButton.style.marginRight = "10px";
-        // loginButton.addEventListener("click", () => {
-        //     window.location.href = "login";
-        // });
+//         // Display login and reg buttons
+//         // const loginButton = document.createElement("button");
+//         // loginButton.textContent = "Bejelentkezés";
+//         // loginButton.style.marginRight = "10px";
+//         // loginButton.addEventListener("click", () => {
+//         //     window.location.href = "login";
+//         // });
 
-        // const registerButton = document.createElement("button");
-        // registerButton.textContent = "Regisztráció";
-        // registerButton.addEventListener("click", () => {
-        //     window.location.href = "register";
-        // });
+//         // const registerButton = document.createElement("button");
+//         // registerButton.textContent = "Regisztráció";
+//         // registerButton.addEventListener("click", () => {
+//         //     window.location.href = "register";
+//         // });
 
-        // header.appendChild(loginButton);
-        // header.appendChild(registerButton);
-    }
-}
+//         // header.appendChild(loginButton);
+//         // header.appendChild(registerButton);
+//     }
+// }

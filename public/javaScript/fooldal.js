@@ -287,37 +287,37 @@ document.body.appendChild(spacer);
 const nav = document.querySelector("nav");
 
 // Check if the user is logged 
-fetch('public/kapcsolat/session.php')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Szerver hiba");
-        }
-        return response.json();
-    })
-    .then(result => {
-        if (result.loggedIn) {
-            // Create the logout 
-            const logoutButton = document.createElement("button");
-            logoutButton.textContent = "Kijelentkezés";
-            logoutButton.style.marginRight = "10px";
-            logoutButton.style.padding = "5px 10px";
-            logoutButton.style.background = "rgb(42, 42, 57)";
-            logoutButton.style.color = "white";
-            logoutButton.style.border = "none";
-            logoutButton.style.borderRadius = "5px";
-            logoutButton.style.cursor = "pointer";
-            logoutButton.addEventListener("click", () => {
-                window.location.href = "/SzMDB/public/kapcsolat/logout.php";
-            });
+// fetch('public/kapcsolat/session.php')
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error("Szerver hiba");
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
+//         if (result.loggedIn) {
+//             // Create the logout 
+//             const logoutButton = document.createElement("button");
+//             logoutButton.textContent = "Kijelentkezés";
+//             logoutButton.style.marginRight = "10px";
+//             logoutButton.style.padding = "5px 10px";
+//             logoutButton.style.background = "rgb(42, 42, 57)";
+//             logoutButton.style.color = "white";
+//             logoutButton.style.border = "none";
+//             logoutButton.style.borderRadius = "5px";
+//             logoutButton.style.cursor = "pointer";
+//             logoutButton.addEventListener("click", () => {
+//                 window.location.href = "/SzMDB/public/kapcsolat/logout.php";
+//             });
 
             
-            const nav = document.querySelector("nav");
-            nav.appendChild(logoutButton);
-        }
-    })
-    .catch(error => {
-        console.error("Error checking login status:", error);
-    });
+//             // const nav = document.querySelector("nav");
+//             // nav.appendChild(logoutButton);
+//         }
+//     })
+//     .catch(error => {
+//         console.error("Error checking login status:", error);
+//     });
 /*
 //Footer
 const footer = document.createElement("footer");

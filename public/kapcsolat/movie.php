@@ -3,24 +3,6 @@
 require_once("kapcsolat.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // if(isset($_GET['movieId'])){
-    //     $movieId = $_GET['movieId'];
-
-    //     $query = "SELECT movie.id, movie.title, movie.pictureURL, movie.description, movie.isItASeries, series.id AS 'sereiesId', series.title AS 'seriesTitle', movie.part
-    //               FROM movie, series
-    //               WHERE movie.seriesId = series.id AND movie.id = $movieId";
-        
-    //     $result = mysqli_query($connect, $query);
-    
-    //     if ($result) {
-    //         $movie = [];
-    //         while ($row = mysqli_fetch_assoc($result)) {
-    //             $movie[] = $row;
-    //         }
-    //         header("Content-Type: application/json");
-    //         echo json_encode($movie);  
-    //     }
-    // }
     if(!isset(($_GET['movieId']))){
         http_response_code(404);
         header("Content-Type: application/json");

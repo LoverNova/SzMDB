@@ -52,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 VALUE ($movieId,$genreId)"; 
         if(mysqli_query($connect, $sql)){
             header('Content-Type: application/json');
-            echo json_encode(['id' => "Sikeres feltöltés"]);
+            echo json_encode(['message' => "Sikeresen hozzáadva!"]);
         }
     }
     else{

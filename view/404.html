@@ -11,17 +11,18 @@
 <body>
     <header class="navigation-header">
         <nav>
-          <div class="logo-container">
-            <a href="/SzMDB/">SzMDB</a>
-          </div>
-          <div class="navigation-items" id="navigation-items">
-            <a href="" id="addMovie" class="addMovie"></a>
-            <a href="/SzMDB/login" id="loginProfile" class="addMovie">Bejelentkezés</a>
-          </div>
-          <div class="hamburger">
-            <span id="openHam">&#9776;</span>
-            <span id="closeHam">&#x2716;</span>
-          </div>
+            <div class="logo-container">
+                <a href="">SzMDB</a>
+            </div>
+            <div class="navigation-items" id="navigation-items">
+                <a href="" id="addMovie" class="addMovie"></a>
+                <a href="/SzMDB/public/kapcsolat/logout.php" id="logOut" class="addMovie"></a>
+                <a href="login" id="loginProfile" class="addMovie">Bejelentkezés</a>
+            </div>
+            <div class="hamburger">
+                <span id="openHam">&#9776;</span>
+                <span id="closeHam">&#x2716;</span>
+            </div>
         </nav>
     </header>
     <div class="content">
@@ -30,7 +31,7 @@
         <p><a href="/SzMDB/">Ugrás a címlapra</a></p>
     </div>
     <script src="SzMDB/public/javaScript/script.js"></script>
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const userButton = document.getElementById("user-button");
             if (userButton) {
@@ -51,6 +52,6 @@
                 });
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>
