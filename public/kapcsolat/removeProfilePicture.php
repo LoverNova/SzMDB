@@ -13,7 +13,7 @@ if (!isset($_SESSION["userId"])) {
 }
 
 $userId = $_SESSION["userId"];
-$defaultProfilePicture = "/SzMDB/public/img/default-profile.png";
+$defaultProfilePicture = "SzMDB/public/uploads/default-profile.png";
 
 $query = "UPDATE client SET profilePicture = NULL WHERE id = ?";
 $stmt = $connect->prepare($query);

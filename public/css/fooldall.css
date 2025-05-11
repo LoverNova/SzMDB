@@ -26,7 +26,7 @@ body, html {
   right: 0;
 } */
 
-header button {
+/* header button {
     padding: 10px 15px;
     font-size: 1em;
     background-color: #007bff;
@@ -39,7 +39,7 @@ header button {
 
 header button:hover {
     background-color: #0056b3;
-}
+} */
 
 
 .filters {

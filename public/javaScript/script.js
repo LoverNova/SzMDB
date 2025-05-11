@@ -25,7 +25,14 @@ fetch('public/kapcsolat/session.php')
     console.log(result);
     
     if(result['loggedIn']){
-        html = `<img src="SzMDB/public/uploads/2_images.png" class="profile" alt="">`;
+        if(result['profilePicture'] == null){
+            console.log(result['profilePicture']);
+            
+            html = `<img src="SzMDB/public/uploads/default-profile.png" class="profile" alt="">`;
+        }
+        else{
+            html = `<img src="SzMDB/public/uploads/${result['profilePicture']}" class="profile" alt="">`;    
+        }
 
         Profile = document.getElementById("loginProfile");
         Profile.classList.remove("addMovie")

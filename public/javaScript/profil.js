@@ -4,50 +4,52 @@ document.addEventListener("DOMContentLoaded", async () => {
     const profilePicture = document.getElementById("profile-picture");
     const removeProfilePictureButton = document.getElementById("remove-profile-picture-button");
 
+
+
     const response = await fetch("/SzMDB/public/kapcsolat/session.php");
     const sessionData = await response.json();
 
-    // const menu = document.querySelector(".menu");
-    // if (menu) {
-    //     menu.innerHTML = ""; // Clear existing menu items
+    const menu = document.querySelector(".menu");
+    if (menu) {
+        menu.innerHTML = ""; // Clear existing menu items
 
-    //     if (sessionData.loggedIn) {
-    //         // Update profile picture
-    //         if (profilePicture && sessionData.profilePicture) {
-    //             profilePicture.src = sessionData.profilePicture;
-    //         }
+        if (sessionData.loggedIn) {
+            // Update profile picture
+            if (profilePicture && sessionData.profilePicture) {
+                profilePicture.src = sessionData.profilePicture;
+            }
 
-    //         // Update menu for logged-in user
-    //         const profileLink = document.createElement("a");
-    //         profileLink.href = "/SzMDB/profile";
-    //         profileLink.textContent = "Profil";
-    //         profileLink.className = "menu-item";
+            // // Update menu for logged-in user
+            // const profileLink = document.createElement("a");
+            // profileLink.href = "/SzMDB/profile";
+            // profileLink.textContent = "Profil";
+            // profileLink.className = "menu-item";
 
-    //         const logoutLink = document.createElement("a");
-    //         logoutLink.href = "/SzMDB/logout";
-    //         logoutLink.textContent = "Kijelentkezés";
-    //         logoutLink.className = "menu-item";
+            // const logoutLink = document.createElement("a");
+            // logoutLink.href = "/SzMDB/logout";
+            // logoutLink.textContent = "Kijelentkezés";
+            // logoutLink.className = "menu-item";
 
-    //         menu.appendChild(profileLink);
-    //         menu.appendChild(logoutLink);
-    //     } else {
-    //         // Update menu for guest user
-    //         const loginLink = document.createElement("a");
-    //         loginLink.href = "/SzMDB/login";
-    //         loginLink.textContent = "Bejelentkezés";
-    //         loginLink.className = "menu-item";
+            // menu.appendChild(profileLink);
+            // menu.appendChild(logoutLink);
+        // } else {
+        //     // Update menu for guest user
+        //     const loginLink = document.createElement("a");
+        //     loginLink.href = "/SzMDB/login";
+        //     loginLink.textContent = "Bejelentkezés";
+        //     loginLink.className = "menu-item";
 
-    //         const registerLink = document.createElement("a");
-    //         registerLink.href = "/SzMDB/register";
-    //         registerLink.textContent = "Regisztráció";
-    //         registerLink.className = "menu-item";
+        //     const registerLink = document.createElement("a");
+        //     registerLink.href = "/SzMDB/register";
+        //     registerLink.textContent = "Regisztráció";
+        //     registerLink.className = "menu-item";
 
-    //         menu.appendChild(loginLink);
-    //         menu.appendChild(registerLink);
-    //     }
-    // } else {
-    //     console.warn("Menu element not found in the DOM.");
-    // }
+        //     menu.appendChild(loginLink);
+        //     menu.appendChild(registerLink);
+        }
+    } else {
+        console.warn("Menu element not found in the DOM.");
+    }
 
     if (profilePictureForm) {
         profilePictureForm.addEventListener("submit", async (e) => {
@@ -103,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (removeResponse.ok) {
                 if (profilePicture) {
-                    profilePicture.src = "/SzMDB/public/img/default-profile.png"; // Reset to default
+                    profilePicture.src = "/SzMDB/public/uploads/default-profile.png"; // Reset to default
                 }
                 alert("Profilkép sikeresen eltávolítva!");
             } else {
