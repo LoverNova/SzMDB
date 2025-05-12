@@ -42,7 +42,7 @@ fetch('public/kapcsolat/session.php')
         document.getElementById('logOut').innerHTML = "Kijelentkezés"
 
         if(result['admin'] === 1){
-            html = `Add new movie`;
+            html = `Új film hozzáadása`;
 
             admin = document.getElementById("addMovie");
             admin.innerHTML = html;
