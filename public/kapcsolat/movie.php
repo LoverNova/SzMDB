@@ -84,22 +84,3 @@ elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
     }
 }
-
-if($_SERVER['REQUEST_METHOD'] === 'DELETE'){
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM movie WHERE id='$id' ";
-        $result = mysqli_query($conn, $sql);
-        if(mysqli_num_rows($result)>0){ //ha a visszaadott sorok száma nagyobb nulla
-            //volt ilyen id
-            $sql = "DELETE FROM movie WHERE id='$id'";
-            if(mysqli_query($conn, $sql)){
-                //sikeres törlés
-                echo "A film törölve";
-            }
-            else{
-                echo "törlés sikertelen";
-            }
-        }
-    }
-}
